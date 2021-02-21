@@ -1,12 +1,5 @@
-# terraform-boilerplate
-Terraformの設計を行う際に雛形となるプロジェクトです。
-
-このプロジェクトはAWSの管理に特化していますが、他のCloudのResourcesも管理出来るように設計してあります。
-
-## 想定読者
-
-- ある程度Terraformを使った事がある方
-- AWSに関する基礎的なスキルを持っている方
+# lgtm-cat-terraform
+lgtm-cat（サービス名 LGTMeow https://lgtmeow.com のインフラ管理用プロジェクトです。
 
 ## 事前準備
 
@@ -26,9 +19,9 @@ tfenvとDockerの利用を紹介します。
 
 その後以下の手順で設定を行います。
 
-- `tfenv install 0.12.25`
-- `tfenv use 0.12.25`
-- `terraform --version` で Terraform v0.12.25 が表示されればOK
+- `tfenv install 0.14.7`
+- `tfenv use 0.14.7`
+- `terraform --version` で Terraform v0.14.7 が表示されればOK
 
 #### Docker
 
@@ -56,7 +49,7 @@ Terraformはこのアクセスキーを使ってAWSの各種Resourcesを作成�
 
 Macの場合 `brew install awscli` を実行してaws cliのインストールを行います。
 
-その後、`aws configure --profile nekochans-dev`
+その後、`aws configure --profile lgtm-cat`
 
 対話形式のインターフェースに従い入力します。
 
@@ -72,47 +65,39 @@ Default output format [None]: json
 `~/.aws/credentials` という名前のファイルを作成して以下の内容を設定します。
 
 ```
-[nekochans-dev]
+[lgtm-cat]
 aws_access_key_id = あなたのアクセスキーID
 aws_secret_access_key = あなたのシークレットアクセスキー
 ```
 
-このプロジェクトではprofile名を `nekochans-dev` としています。
+このプロジェクトではprofile名を `lgtm-cat` としています。
 
 この名前は任意の物でも構いませんが、必ずprofile名を明示的に付けておく事が重要です。
-
-そうしないと複数のAWS環境を管理する際に誤って他の環境に適応してしまう、等の事故が発生する可能性があるからです。
-
-profile名を書き換えた場合、`providers/aws/environments/○○/○○/` 配下の `provider.tf`, `backend.tf` を書き換えて下さい。
 
 ### S3Bucketを作成する
 
 `.tfstate` というファイルに実行状態を記録します。（実体はただのJSONファイルです）
 
-このプロジェクトでは `dev-nekochans-tfstate` というS3Bucketがその保存先になります。
+このプロジェクトでは `lgtm-cat-tfstate` というS3Bucketがその保存先になります。
 
 この設定は `providers/aws/environments/○○/backend.tf` に記載されています。
-
-S3Bucketはグローバルの名前空間でユニークな名前になっている必要があります。（同じ名前のS3Bucketは作成出来ない）
-
-このプロジェクトを元に設計を行う場合は、この部分を自身が作ったS3Bucketに書き換える必要があります。
 
 ## ディレクトリ構成
 
 下記のようなディレクトリ構成になっています。
 
 ```
-terraform-boilerplate/
+lgtm-cat-terraform/
   ├ modules/
   │  └ aws/
   └ providers/
      └ aws/
        └ environments/
-         ├ dev/
-         │ ├ 10-network/
+         ├ stg/
+         │ ├ 10-common/
          │ └ 20-xxxx/
          └ prod/
-           ├ 10-network/
+           ├ 10-common/
            └ 20-xxxx/
 ```
 
@@ -173,35 +158,6 @@ resource "aws_key_pair" "ssh_key_pair" {
 
 他にもインデント等細かいルールがありますが、こちらに関しては `terraform fmt -recursive` を実行すれば自動整形されるのでこれを利用すれば良いでしょう。
 
-`terraform fmt` は必ずプロジェクトルートで実行を行ってください。
+`terraform fmt -recursive` は必ずプロジェクトルートで実行を行ってください。
 
 そうしないと全ての `.tf` ファイルに修正が適応されません。
-
-## 参考資料
-
-### [公式ドキュメント](https://www.terraform.io/docs/providers/aws/index.html)
-
-各Resourcesのパラメータ等はここで確認するのが確実です。
-
-### [Terraform Recommended Practices](https://www.terraform.io/docs/enterprise/guides/recommended-practices/index.html)
-
-公式が公開しているベストプラクティス。
-
-設計方針を決める前に一通り見ておく事を推奨します。
-
-### [Terraform Module Registry](https://registry.terraform.io/)
-
-Terraformの開発元である、HashiCorp社が作成したmodule等を見る事が出来る。
-
-基本的にここを参考にすると良いです。
-
-[【モダンTerraform】ベストプラクティスはTerraform Module Registryを参照しよう](http://febc-yamamoto.hatenablog.jp/entry/2018/02/01/090046)
-
-### その他
-
-どの記事も実戦で良く使うテクニックが載っている良記事です。
-
-- [Terraform職人入門: 日々の運用で学んだ知見を淡々とまとめる](https://qiita.com/minamijoyo/items/1f57c62bed781ab8f4d7)
-- [Terraformを1年間運用して学んだトラブルパターン4選](https://medium.com/eureka-engineering/terraform%E3%82%921%E5%B9%B4%E9%96%93%E9%81%8B%E7%94%A8%E3%81%97%E3%81%A6%E5%AD%A6%E3%82%93%E3%81%A0%E3%83%88%E3%83%A9%E3%83%96%E3%83%AB%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B34%E9%81%B8-f31b751a14e6)
-- [Terraform Best Practices in 2017](https://qiita.com/shogomuranushi/items/e2f3ff3cfdcacdd17f99)
-- [同僚に「早く言ってよ〜」と言われたTerraform小技](https://blog.grasys.io/post/kyouhei/tips-of-terraform_target-and-ignore_changes-and-plugin-dir/)
