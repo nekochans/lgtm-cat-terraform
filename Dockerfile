@@ -1,6 +1,6 @@
 FROM alpine:3.11
 
-ARG TERRAFORM_VERSION=0.12.25
+ARG TERRAFORM_VERSION=0.14.7
 
 RUN set -eux \
   && apk update\
