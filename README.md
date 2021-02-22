@@ -82,6 +82,15 @@ aws_secret_access_key = あなたのシークレットアクセスキー
 
 この設定は `providers/aws/environments/○○/backend.tf` に記載されています。
 
+### 初期化
+
+Docker起動後にホストOS上で以下のコマンドを実行すると `terraform init` が実行されます。
+
+```bash
+chmod 755 terraform-init.sh
+docker-compose exec terraform ./terraform-init.sh
+```
+
 ## ディレクトリ構成
 
 下記のようなディレクトリ構成になっています。
