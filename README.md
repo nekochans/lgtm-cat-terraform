@@ -94,10 +94,10 @@ lgtm-cat-terraform/
      └ aws/
        └ environments/
          ├ stg/
-         │ ├ 10-common/
+         │ ├ 11-images/
          │ └ 20-xxxx/
          └ prod/
-           ├ 10-common/
+           ├ 11-images/
            └ 20-xxxx/
 ```
 
