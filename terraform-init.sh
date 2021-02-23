@@ -1,6 +1,7 @@
 #!/bin/sh
 
 tfstateDirList='
+/data/providers/aws/environments/prod/10-acm
 /data/providers/aws/environments/prod/11-images
 '
 
