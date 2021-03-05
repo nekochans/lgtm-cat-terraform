@@ -82,6 +82,16 @@ aws_secret_access_key = あなたのシークレットアクセスキー
 
 この設定は `providers/aws/environments/○○/backend.tf` に記載されています。
 
+### 環境変数用ファイルの配置
+
+以下のファイルを配置して下さい。
+
+#### providers/aws/environments/prod/13-txt/terraform.tfvars
+
+```terraform
+txt_records = ["google-site-verification=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"]
+```
+
 ### 初期化
 
 Docker起動後にホストOS上で以下のコマンドを実行すると `terraform init` が実行されます。
