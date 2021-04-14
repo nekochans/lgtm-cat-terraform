@@ -5,18 +5,13 @@ resource "aws_s3_bucket" "upload_images_bucket" {
   force_destroy = true
 
   versioning {
-    enabled = true
+    enabled = false
   }
 
   lifecycle_rule {
     enabled = true
     // 失効した削除マーカーまたは不完全なマルチパートアップロードを削除する
     abort_incomplete_multipart_upload_days = 7
-
-    // 古いバージョンは30日で削除
-    noncurrent_version_expiration {
-      days = 30
-    }
   }
 }
 
