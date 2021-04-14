@@ -20,6 +20,40 @@ resource "aws_s3_bucket" "upload_images_bucket" {
   }
 }
 
+resource "aws_s3_bucket" "cat_images_bucket" {
+  bucket = var.cat_images_bucket_name
+  acl    = "private"
+
+  force_destroy = true
+
+  versioning {
+    enabled = false
+  }
+
+  lifecycle_rule {
+    enabled = true
+    // 失効した削除マーカーまたは不完全なマルチパートアップロードを削除する
+    abort_incomplete_multipart_upload_days = 7
+  }
+}
+
+resource "aws_s3_bucket" "created_lgtm_images_bucket" {
+  bucket = var.created_lgtm_images_bucket_name
+  acl    = "private"
+
+  force_destroy = true
+
+  versioning {
+    enabled = false
+  }
+
+  lifecycle_rule {
+    enabled = true
+    // 失効した削除マーカーまたは不完全なマルチパートアップロードを削除する
+    abort_incomplete_multipart_upload_days = 7
+  }
+}
+
 resource "aws_s3_bucket" "lgtm_images_bucket" {
   bucket = var.lgtm_images_bucket_name
   acl    = "private"
