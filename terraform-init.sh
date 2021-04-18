@@ -1,6 +1,8 @@
 #!/bin/sh
 
 tfstateDirList='
+/data/providers/aws/environments/stg/10-acm
+/data/providers/aws/environments/stg/11-images
 /data/providers/aws/environments/prod/10-acm
 /data/providers/aws/environments/prod/11-images
 /data/providers/aws/environments/prod/12-vercel
