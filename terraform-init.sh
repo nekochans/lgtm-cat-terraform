@@ -7,6 +7,7 @@ tfstateDirList='
 /data/providers/aws/environments/prod/11-images
 /data/providers/aws/environments/prod/12-vercel
 /data/providers/aws/environments/prod/13-txt
+/data/providers/aws/environments/prod/14-iam
 '
 
 for tfstateDir in ${tfstateDirList}; do
