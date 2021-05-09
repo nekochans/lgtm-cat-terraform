@@ -92,6 +92,12 @@ aws_secret_access_key = あなたのシークレットアクセスキー
 txt_records = ["google-site-verification=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"]
 ```
 
+#### providers/aws/environments/prod/15-ses/terraform.tfvars
+
+```terraform
+from_email = "us-east-1のSES EmailAddressesに定義されているメールアドレスを指定"
+```
+
 ### 初期化
 
 Docker起動後にホストOS上で以下のコマンドを実行すると `terraform init` が実行されます。
