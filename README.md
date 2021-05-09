@@ -134,6 +134,12 @@ lgtm-cat-terraform/
 
 今後このプロジェクトをベースに機能を追加する際も依存関係を意識してディレクトリ名を決める必要があります。
 
+[LGTMeow](https://lgtmeow.com) では本番環境とステージング環境など、その他の環境も同じAWSアカウント上にリソースが存在します。
+
+その為、AWSアカウントに1つだけ存在すれば良いリソースに関しては `providers/aws/environments/prod` にのみ定義されている場合があります。
+
+ステージング用のリソースが本番用のリソースに依存しているケースもあるので、先に本番用の `providers/aws/environments/prod` 配下の `terraform apply` を全て終わらせておく必要があります。
+
 ## 設計方針
 
 - 今はAWSのみだが、他のproviderが増えても大丈夫なように `providers/` を作ってあります
