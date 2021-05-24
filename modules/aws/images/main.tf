@@ -11,7 +11,12 @@ resource "aws_s3_bucket" "upload_images_bucket" {
   lifecycle_rule {
     enabled = true
     // 失効した削除マーカーまたは不完全なマルチパートアップロードを削除する
-    abort_incomplete_multipart_upload_days = 7
+    abort_incomplete_multipart_upload_days = 1
+
+    // オブジェクトの有効期限
+    expiration {
+      days = 10
+    }
   }
 }
 
@@ -28,7 +33,12 @@ resource "aws_s3_bucket" "cat_images_bucket" {
   lifecycle_rule {
     enabled = true
     // 失効した削除マーカーまたは不完全なマルチパートアップロードを削除する
-    abort_incomplete_multipart_upload_days = 7
+    abort_incomplete_multipart_upload_days = 1
+
+    // オブジェクトの有効期限
+    expiration {
+      days = 10
+    }
   }
 }
 
@@ -45,7 +55,12 @@ resource "aws_s3_bucket" "created_lgtm_images_bucket" {
   lifecycle_rule {
     enabled = true
     // 失効した削除マーカーまたは不完全なマルチパートアップロードを削除する
-    abort_incomplete_multipart_upload_days = 7
+    abort_incomplete_multipart_upload_days = 1
+
+    // オブジェクトの有効期限
+    expiration {
+      days = 10
+    }
   }
 }
 
