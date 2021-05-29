@@ -92,6 +92,12 @@ aws_secret_access_key = あなたのシークレットアクセスキー
 txt_records = ["google-site-verification=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"]
 ```
 
+#### providers/aws/environments/prod/15-ses/terraform.tfvars
+
+```terraform
+from_email = "us-east-1のSES EmailAddressesに定義されているメールアドレスを指定"
+```
+
 ### 初期化
 
 Docker起動後にホストOS上で以下のコマンドを実行すると `terraform init` が実行されます。
@@ -133,6 +139,12 @@ lgtm-cat-terraform/
 その為、必ず数字が小さいディレクトリから `terraform apply` を実行する必要があります。
 
 今後このプロジェクトをベースに機能を追加する際も依存関係を意識してディレクトリ名を決める必要があります。
+
+[LGTMeow](https://lgtmeow.com) では本番環境とステージング環境など、その他の環境も同じAWSアカウント上にリソースが存在します。
+
+その為、AWSアカウントに1つだけ存在すれば良いリソースに関しては `providers/aws/environments/prod` にのみ定義されている場合があります。
+
+ステージング用のリソースが本番用のリソースに依存しているケースもあるので、先に本番用の `providers/aws/environments/prod` 配下の `terraform apply` を全て終わらせておく必要があります。
 
 ## 設計方針
 
