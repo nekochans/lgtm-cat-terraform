@@ -1,4 +1,4 @@
-module "iam" {
+module "cognito" {
   source                                  = "../../../../../modules/aws/cognito"
   user_pool_name                          = local.user_pool_name
   user_pool_domain_name                   = local.user_pool_domain_name

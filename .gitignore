@@ -11,3 +11,5 @@
 # IDEA Setting File
 .idea
 terraform-boilerplate.iml
+
+modules/aws/lambda/function/lambda.zip
