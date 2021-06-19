@@ -8,7 +8,7 @@ locals {
 
   api_gateway_name        = "${local.env}-lgtm-cat-api"
   auto_deploy             = true
-  api_gateway_domain_name = "stg-lgtm-cat-api.${var.main_domain_name}"
+  api_gateway_domain_name = "${local.env}-api.${var.main_domain_name}"
   certificate_arn         = data.terraform_remote_state.acm.outputs.ap_northeast_1_sub_domain_acm_arn
 }
 
