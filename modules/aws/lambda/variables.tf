@@ -13,3 +13,7 @@ variable "lambda_api_iam_policy_name" {
 variable "log_retention_in_days" {
   type = number
 }
+
+variable "s3_bucket_name" {
+  type = string
+}

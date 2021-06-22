@@ -17,3 +17,14 @@ data "terraform_remote_state" "acm" {
     profile = "lgtm-cat"
   }
 }
+
+data "terraform_remote_state" "images" {
+  backend = "s3"
+
+  config = {
+    bucket  = "stg-lgtm-cat-tfstate"
+    key     = "images/terraform.tfstate"
+    region  = "ap-northeast-1"
+    profile = "lgtm-cat"
+  }
+}
