@@ -28,8 +28,18 @@ data "aws_iam_policy_document" "lambda_api" {
       "arn:aws:logs:*:*:*"
     ]
   }
-}
 
+  statement {
+    effect = "Allow"
+    actions = [
+      "s3:*"
+    ]
+    resources = [
+      "arn:aws:s3:::${var.s3_bucket_name}",
+      "arn:aws:s3:::${var.s3_bucket_name}/*"
+    ]
+  }
+}
 resource "aws_iam_policy" "lambda_api" {
   name   = var.lambda_api_iam_policy_name
   policy = data.aws_iam_policy_document.lambda_api.json

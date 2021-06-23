@@ -5,6 +5,7 @@ module "lambda" {
   lambda_api_iam_policy_name = local.lambda_api_iam_policy_name
   lambda_api_iam_role_name   = local.lambda_api_iam_role_name
   log_retention_in_days      = local.log_retention_in_days
+  s3_bucket_name             = data.terraform_remote_state.images.outputs.upload_images_bucket_name
 }
 
 module "api_gateway" {
