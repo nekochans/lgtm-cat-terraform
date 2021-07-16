@@ -17,3 +17,7 @@ variable "log_retention_in_days" {
 variable "s3_bucket_name" {
   type = string
 }
+
+variable "lgtm_images_cdn_domain" {
+  type = string
+}
