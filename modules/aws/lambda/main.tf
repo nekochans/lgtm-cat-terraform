@@ -4,6 +4,8 @@ data "archive_file" "lambda_function" {
   output_path = "${path.module}/function/lambda.zip"
 }
 
+data "aws_region" "current" {}
+
 resource "aws_lambda_function" "api" {
   filename         = data.archive_file.lambda_function.output_path
   source_code_hash = data.archive_file.lambda_function.output_base64sha256
@@ -14,6 +16,14 @@ resource "aws_lambda_function" "api" {
 
   memory_size = 128
   timeout     = 900
+
+  environment {
+    variables = {
+      REGION                 = data.aws_region.current.name
+      UPLOAD_S3_BUCKET_NAME  = var.s3_bucket_name
+      LGTM_IMAGES_CDN_DOMAIN = var.lgtm_images_cdn_domain
+    }
+  }
 
   lifecycle {
     ignore_changes = [
