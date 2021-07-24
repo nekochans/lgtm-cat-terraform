@@ -1,0 +1,133 @@
+resource "aws_rds_cluster" "rds_cluster" {
+  cluster_identifier              = "${var.rds_name}-cluster"
+  master_username                 = var.master_username
+  master_password                 = var.master_password
+  backup_retention_period         = 5
+  preferred_backup_window         = "19:30-20:00"
+  skip_final_snapshot             = true
+  storage_encrypted               = false
+  vpc_security_group_ids          = [aws_security_group.rds_cluster.id]
+  preferred_maintenance_window    = "wed:20:15-wed:20:45"
+  db_subnet_group_name            = aws_db_subnet_group.rds_subnet_group.name
+  db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.rds_cluster_parameter_group.name
+  engine                          = var.engine
+  engine_version                  = var.engine_version
+  availability_zones              = var.cluster_availability_zones
+
+  lifecycle {
+    ignore_changes = [availability_zones]
+  }
+}
+
+resource "aws_rds_cluster_instance" "rds_cluster_instance" {
+  for_each                = toset(var.instance_availability_zones)
+  cluster_identifier      = aws_rds_cluster.rds_cluster.id
+  instance_class          = var.instance_class
+  engine                  = var.engine
+  engine_version          = var.engine_version
+  identifier              = "${var.rds_name}-${index(var.instance_availability_zones, each.value) + 1}"
+  db_subnet_group_name    = aws_db_subnet_group.rds_subnet_group.name
+  db_parameter_group_name = aws_db_parameter_group.rds_parameter_group.name
+  monitoring_role_arn     = aws_iam_role.rds_monitoring_role.arn
+  monitoring_interval     = 60
+  availability_zone       = each.value
+}
+
+resource "aws_db_subnet_group" "rds_subnet_group" {
+  name       = "${var.rds_name}-subnet-group"
+  subnet_ids = var.subnet_ids
+}
+
+resource "aws_db_parameter_group" "rds_parameter_group" {
+  name   = "${var.rds_name}-parameter-group"
+  family = var.parameter_group_family
+
+  parameter {
+    name  = "long_query_time"
+    value = "0.1"
+  }
+
+  parameter {
+    name  = "slow_query_log"
+    value = "1"
+  }
+}
+
+resource "aws_rds_cluster_parameter_group" "rds_cluster_parameter_group" {
+  name   = "${var.rds_name}-cluster-parameter-group"
+  family = var.parameter_group_family
+
+  parameter {
+    name  = "character_set_client"
+    value = "utf8mb4"
+  }
+
+  parameter {
+    name  = "character_set_connection"
+    value = "utf8mb4"
+  }
+
+  parameter {
+    name  = "character_set_database"
+    value = "utf8mb4"
+  }
+
+  parameter {
+    name  = "character_set_filesystem"
+    value = "binary"
+  }
+
+  parameter {
+    name  = "character_set_results"
+    value = "utf8mb4"
+  }
+
+  parameter {
+    name  = "character_set_server"
+    value = "utf8mb4"
+  }
+
+  parameter {
+    name  = "collation_connection"
+    value = "utf8mb4_bin"
+  }
+
+  parameter {
+    name  = "collation_server"
+    value = "utf8mb4_bin"
+  }
+
+  parameter {
+    name         = "character-set-client-handshake"
+    value        = "1"
+    apply_method = "pending-reboot"
+  }
+
+  parameter {
+    name  = "time_zone"
+    value = "Asia/Tokyo"
+  }
+
+  lifecycle {
+    ignore_changes = all
+  }
+}
+
+resource "aws_security_group" "rds_cluster" {
+  name        = var.rds_name
+  description = "${var.rds_name} Security Group"
+  vpc_id      = var.vpc_id
+
+  tags = {
+    Name = var.rds_name
+  }
+}
+
+resource "aws_security_group_rule" "rds_egress" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.rds_cluster.id
+}
