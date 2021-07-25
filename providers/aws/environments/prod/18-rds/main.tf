@@ -12,4 +12,7 @@ module "rds" {
   parameter_group_family      = local.parameter_group_family
   vpc_id                      = data.terraform_remote_state.network.outputs.vpc_id
   subnet_ids                  = data.terraform_remote_state.network.outputs.subnet_public_ids
+  proxy_engine                = local.proxy_engine
+  app_password                = local.app_password
+  app_username                = local.app_username
 }

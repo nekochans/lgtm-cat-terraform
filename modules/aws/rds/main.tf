@@ -114,12 +114,12 @@ resource "aws_rds_cluster_parameter_group" "rds_cluster_parameter_group" {
 }
 
 resource "aws_security_group" "rds_cluster" {
-  name        = var.rds_name
-  description = "${var.rds_name} Security Group"
+  name        = "${var.rds_name}-rds"
+  description = "${var.rds_name}-rds Security Group"
   vpc_id      = var.vpc_id
 
   tags = {
-    Name = var.rds_name
+    Name = "${var.rds_name}-rds"
   }
 }
 
