@@ -131,3 +131,12 @@ resource "aws_security_group_rule" "rds_egress" {
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.rds_cluster.id
 }
+
+resource "aws_security_group_rule" "rds_ingress_bastion" {
+  type                     = "ingress"
+  from_port                = "3306"
+  to_port                  = "3306"
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.bastion_ecs.id
+  security_group_id        = aws_security_group.rds_cluster.id
+}
