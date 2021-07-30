@@ -40,12 +40,12 @@ resource "aws_security_group" "rds_proxy" {
 }
 
 resource "aws_security_group_rule" "rds_proxy_egress" {
+  security_group_id = aws_security_group.rds_proxy.id
   type              = "egress"
   from_port         = 0
   to_port           = 0
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.rds_proxy.id
 }
 
 resource "aws_security_group_rule" "rds_proxy_from_bastion_server" {
