@@ -17,3 +17,14 @@ data "terraform_remote_state" "network" {
     profile = "lgtm-cat"
   }
 }
+
+data "terraform_remote_state" "stg_lambda-securitygroup" {
+  backend = "s3"
+
+  config = {
+    bucket  = "stg-lgtm-cat-tfstate"
+    key     = "lambda-securitygroup/terraform.tfstate"
+    region  = "ap-northeast-1"
+    profile = "lgtm-cat"
+  }
+}
