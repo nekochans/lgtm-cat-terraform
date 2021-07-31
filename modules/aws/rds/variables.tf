@@ -51,3 +51,7 @@ variable "app_password" {
 variable "proxy_engine" {
   type = string
 }
+
+variable "stg_lambda_securitygroup_id" {
+  type = string
+}

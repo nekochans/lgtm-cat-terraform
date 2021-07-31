@@ -37,6 +37,11 @@ resource "aws_security_group" "rds_proxy" {
   name        = "${var.rds_name}-rds-proxy"
   description = "${var.rds_name} RDS Proxy Security Group"
   vpc_id      = var.vpc_id
+
+  tags = {
+    Name = "${var.rds_name}-rds-proxy"
+  }
+
 }
 
 resource "aws_security_group_rule" "rds_proxy_egress" {
@@ -55,4 +60,13 @@ resource "aws_security_group_rule" "rds_proxy_from_bastion_server" {
   to_port                  = "3306"
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.bastion_ecs.id
+}
+
+resource "aws_security_group_rule" "rds_from_stg_lambda" {
+  security_group_id        = aws_security_group.rds_proxy.id
+  type                     = "ingress"
+  from_port                = "3306"
+  to_port                  = "3306"
+  protocol                 = "tcp"
+  source_security_group_id = var.stg_lambda_securitygroup_id
 }
