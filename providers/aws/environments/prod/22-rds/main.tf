@@ -15,5 +15,5 @@ module "rds" {
   proxy_engine                = local.proxy_engine
   app_password                = local.app_password
   app_username                = local.app_username
-  stg_lambda_securitygroup_id = data.terraform_remote_state.stg_lambda-securitygroup.outputs.lambda_security_group_id
+  stg_lambda_securitygroup_id = data.terraform_remote_state.stg_lambda_securitygroup.outputs.lambda_security_group_id
 }

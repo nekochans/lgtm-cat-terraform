@@ -18,7 +18,7 @@ data "terraform_remote_state" "network" {
   }
 }
 
-data "terraform_remote_state" "stg_lambda-securitygroup" {
+data "terraform_remote_state" "stg_lambda_securitygroup" {
   backend = "s3"
 
   config = {
