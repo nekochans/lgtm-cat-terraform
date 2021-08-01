@@ -10,7 +10,7 @@ module "lambda" {
 }
 
 module "api_gateway" {
-  source = "../../../../../modules/aws/api_gateway"
+  source = "../../../../../modules/aws/api-gateway"
 
   lambda_function_name    = module.lambda.lambda_function_name
   lambda_invoke_arn       = module.lambda.lambda_invoke_arn
