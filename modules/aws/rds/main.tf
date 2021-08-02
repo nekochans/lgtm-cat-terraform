@@ -114,20 +114,38 @@ resource "aws_rds_cluster_parameter_group" "rds_cluster_parameter_group" {
 }
 
 resource "aws_security_group" "rds_cluster" {
-  name        = var.rds_name
-  description = "${var.rds_name} Security Group"
+  name        = "${var.rds_name}-rds"
+  description = "${var.rds_name}-rds Security Group"
   vpc_id      = var.vpc_id
 
   tags = {
-    Name = var.rds_name
+    Name = "${var.rds_name}-rds"
   }
 }
 
 resource "aws_security_group_rule" "rds_egress" {
+  security_group_id = aws_security_group.rds_cluster.id
   type              = "egress"
   from_port         = 0
   to_port           = 0
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.rds_cluster.id
+}
+
+resource "aws_security_group_rule" "rds_ingress_bastion" {
+  security_group_id        = aws_security_group.rds_cluster.id
+  type                     = "ingress"
+  from_port                = "3306"
+  to_port                  = "3306"
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.bastion_ecs.id
+}
+
+resource "aws_security_group_rule" "rds_from_rds_proxy" {
+  security_group_id        = aws_security_group.rds_cluster.id
+  type                     = "ingress"
+  from_port                = "3306"
+  to_port                  = "3306"
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.rds_proxy.id
 }

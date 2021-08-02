@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket  = "lgtm-cat-tfstate"
-    key     = "rds/terraform.tfstate"
+    bucket  = "stg-lgtm-cat-tfstate"
+    key     = "lambda-securitygroup/terraform.tfstate"
     region  = "ap-northeast-1"
     profile = "lgtm-cat"
   }

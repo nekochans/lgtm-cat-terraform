@@ -42,3 +42,16 @@ variable "parameter_group_family" {
   type = string
 }
 
+variable "app_username" {
+  type = string
+}
+variable "app_password" {
+  type = string
+}
+variable "proxy_engine" {
+  type = string
+}
+
+variable "stg_lambda_securitygroup_id" {
+  type = string
+}

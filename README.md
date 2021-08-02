@@ -192,3 +192,33 @@ resource "aws_key_pair" "ssh_key_pair" {
 `terraform fmt -recursive` は必ずプロジェクトルートで実行を行ってください。
 
 そうしないと全ての `.tf` ファイルに修正が適応されません。
+
+## ECS Exec
+
+踏み台用の ECS Cluster を構築しています。
+
+### 実行環境
+
+- AWS CLI v2 バージョン 2.1.31以降
+- Session Manager プラグイン 
+
+インストール方法は下記を参考にしてください。
+
+[AWS CLI バージョン 2 のインストール、更新、アンインストール - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2.html)
+[(Optional) Install the Session Manager plugin for the AWS CLI - AWS Systems Manager](https://docs.aws.amazon.com/ja_jp/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html)
+
+### 実行コマンド
+下記を実行することでコンテナに入ることができます。
+
+起動中のタスクIDを設定してください。
+
+```bash
+aws ecs execute-command  \
+    --profile lgtm-cat \
+    --region ap-northeast-1 \
+    --cluster lgtm-cat-bastion-cluster \
+    --task <タスクID> \
+    --container bastion \
+    --command "/bin/sh" \
+    --interactive
+```
