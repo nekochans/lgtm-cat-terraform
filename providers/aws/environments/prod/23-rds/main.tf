@@ -17,4 +17,6 @@ module "rds" {
   app_username                   = local.app_username
   stg_lambda_securitygroup_id    = data.terraform_remote_state.stg_lambda_securitygroup.outputs.lambda_security_group_id
   migration_ecs_securitygroup_id = data.terraform_remote_state.migration.outputs.migration_ecs_securitygroup_id
+  rds_domain_name                = local.rds_domain_name
+  rds_proxy_domain_name          = local.rds_proxy_domain_name
 }

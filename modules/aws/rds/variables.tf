@@ -61,3 +61,11 @@ variable "stg_lambda_securitygroup_id" {
 variable "migration_ecs_securitygroup_id" {
   type = string
 }
+
+variable "rds_domain_name" {
+  type = string
+}
+
+variable "rds_proxy_domain_name" {
+  type = string
+}
