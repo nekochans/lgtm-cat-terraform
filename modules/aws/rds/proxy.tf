@@ -41,7 +41,6 @@ resource "aws_security_group" "rds_proxy" {
   tags = {
     Name = "${var.rds_name}-rds-proxy"
   }
-
 }
 
 resource "aws_security_group_rule" "rds_proxy_egress" {

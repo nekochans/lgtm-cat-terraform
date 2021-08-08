@@ -45,13 +45,27 @@ variable "parameter_group_family" {
 variable "app_username" {
   type = string
 }
+
 variable "app_password" {
   type = string
 }
+
 variable "proxy_engine" {
   type = string
 }
 
 variable "stg_lambda_securitygroup_id" {
+  type = string
+}
+
+variable "migration_ecs_securitygroup_id" {
+  type = string
+}
+
+variable "rds_domain_name" {
+  type = string
+}
+
+variable "rds_proxy_domain_name" {
   type = string
 }

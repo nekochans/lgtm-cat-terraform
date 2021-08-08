@@ -149,3 +149,12 @@ resource "aws_security_group_rule" "rds_from_rds_proxy" {
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.rds_proxy.id
 }
+
+resource "aws_security_group_rule" "rds_from_migration" {
+  security_group_id        = aws_security_group.rds_cluster.id
+  type                     = "ingress"
+  from_port                = "3306"
+  to_port                  = "3306"
+  protocol                 = "tcp"
+  source_security_group_id = var.migration_ecs_securitygroup_id
+}
