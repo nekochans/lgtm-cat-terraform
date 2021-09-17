@@ -86,13 +86,13 @@ aws_secret_access_key = あなたのシークレットアクセスキー
 
 以下のファイルを配置して下さい。
 
-#### providers/aws/environments/prod/13-txt/terraform.tfvars
+#### providers/aws/environments/prod/14-txt/terraform.tfvars
 
 ```terraform
 txt_records = ["google-site-verification=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"]
 ```
 
-#### providers/aws/environments/prod/15-ses/terraform.tfvars
+#### providers/aws/environments/prod/16-ses/terraform.tfvars
 
 ```terraform
 from_email = "us-east-1のSES EmailAddressesに定義されているメールアドレスを指定"
@@ -119,11 +119,13 @@ lgtm-cat-terraform/
      └ aws/
        └ environments/
          ├ stg/
-         │ ├ 11-images/
-         │ └ 20-xxxx/
+         │ ├ 10-network/
+         │ ├ 11-acm/
+         │ └ 22-xxxx/
          └ prod/
-           ├ 11-images/
-           └ 20-xxxx/
+           ├ 10-network/
+           ├ 11-acm/
+           └ 22-xxxx/
 ```
 
 ### 環境分割
