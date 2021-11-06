@@ -195,6 +195,21 @@ resource "aws_key_pair" "ssh_key_pair" {
 
 そうしないと全ての `.tf` ファイルに修正が適応されません。
 
+## 運用上の注意点
+
+リソース変更を行っていないにも関わらず `terraform plan` で差分が発生する事があります。
+
+Terraform以外の手段でリソースが変更された場合は差分が出るようになっている為です。
+
+```
+No changes. Your infrastructure matches the configuration.
+
+Your configuration already matches the changes detected above. If you'd like to update the Terraform state to match, create and apply a refresh-only plan:
+  terraform apply -refresh-only
+```
+
+このように `No changes. Your infrastructure matches the configuration.` が表示されている場合は `terraform apply -refresh-only` を実行して下さい。
+
 ## ECS Exec
 
 踏み台用の ECS Cluster を構築しています。
