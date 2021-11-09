@@ -27,7 +27,7 @@ resource "aws_s3_bucket" "cat_images_bucket" {
   force_destroy = true
 
   versioning {
-    enabled = false
+    enabled = true
   }
 
   lifecycle_rule {
