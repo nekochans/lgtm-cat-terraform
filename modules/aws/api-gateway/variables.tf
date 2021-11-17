@@ -28,3 +28,15 @@ variable "certificate_arn" {
 variable "zone_id" {
   type = string
 }
+
+variable "bff_authorizer_name" {
+  type = string
+}
+
+variable "bff_authorizer_issuer_url" {
+  type = string
+}
+
+variable "bff_authorizer_audience" {
+  type = string
+}

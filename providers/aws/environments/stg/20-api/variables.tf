@@ -6,10 +6,13 @@ locals {
   lambda_api_iam_role_name   = "${local.env}-lgtm-cat-api-role"
   log_retention_in_days      = 3
 
-  api_gateway_name        = "${local.env}-lgtm-cat-api"
-  auto_deploy             = true
-  api_gateway_domain_name = "${local.env}-api.${var.main_domain_name}"
-  certificate_arn         = data.terraform_remote_state.acm.outputs.ap_northeast_1_sub_domain_acm_arn
+  api_gateway_name          = "${local.env}-lgtm-cat-api"
+  auto_deploy               = true
+  api_gateway_domain_name   = "${local.env}-api.${var.main_domain_name}"
+  certificate_arn           = data.terraform_remote_state.acm.outputs.ap_northeast_1_sub_domain_acm_arn
+  bff_authorizer_name       = "${local.env}-bff-authorizer"
+  bff_authorizer_issuer_url = "https://${data.terraform_remote_state.cognito.outputs.idp_endpoint}"
+  bff_authorizer_audience   = data.terraform_remote_state.cognito.outputs.lgtm_cat_bff_client_id
 }
 
 variable "main_domain_name" {
