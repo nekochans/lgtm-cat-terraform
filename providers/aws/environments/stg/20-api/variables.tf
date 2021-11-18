@@ -10,9 +10,9 @@ locals {
   auto_deploy               = true
   api_gateway_domain_name   = "${local.env}-api.${var.main_domain_name}"
   certificate_arn           = data.terraform_remote_state.acm.outputs.ap_northeast_1_sub_domain_acm_arn
-  bff_authorizer_name       = "${local.env}-bff-authorizer"
-  bff_authorizer_issuer_url = "https://${data.terraform_remote_state.cognito.outputs.idp_endpoint}"
-  bff_authorizer_audience   = data.terraform_remote_state.cognito.outputs.lgtm_cat_bff_client_id
+  jwt_authorizer_name       = "${local.env}-jwt-authorizer"
+  jwt_authorizer_issuer_url = "https://${data.terraform_remote_state.cognito.outputs.idp_endpoint}"
+  lgtm_cat_bff_client_id    = data.terraform_remote_state.cognito.outputs.lgtm_cat_bff_client_id
 }
 
 variable "main_domain_name" {

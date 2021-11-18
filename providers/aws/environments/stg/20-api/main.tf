@@ -20,9 +20,9 @@ module "api_gateway" {
   auto_deploy               = local.auto_deploy
   certificate_arn           = local.certificate_arn
   zone_id                   = data.aws_route53_zone.api.zone_id
-  bff_authorizer_name       = local.bff_authorizer_name
-  bff_authorizer_issuer_url = local.bff_authorizer_issuer_url
-  bff_authorizer_audience   = local.bff_authorizer_audience
+  jwt_authorizer_name       = local.jwt_authorizer_name
+  jwt_authorizer_issuer_url = local.jwt_authorizer_issuer_url
+  lgtm_cat_bff_client_id    = local.lgtm_cat_bff_client_id
 
   depends_on = [module.lambda]
 }

@@ -29,14 +29,14 @@ variable "zone_id" {
   type = string
 }
 
-variable "bff_authorizer_name" {
+variable "jwt_authorizer_name" {
   type = string
 }
 
-variable "bff_authorizer_issuer_url" {
+variable "jwt_authorizer_issuer_url" {
   type = string
 }
 
-variable "bff_authorizer_audience" {
+variable "lgtm_cat_bff_client_id" {
   type = string
 }
