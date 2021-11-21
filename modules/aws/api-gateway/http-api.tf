@@ -4,11 +4,24 @@ resource "aws_apigatewayv2_api" "api" {
   target        = var.lambda_arn
 }
 
+resource "aws_apigatewayv2_authorizer" "jwt_authorizer" {
+  api_id           = aws_apigatewayv2_api.api.id
+  authorizer_type  = "JWT"
+  identity_sources = ["$request.header.Authorization"]
+  name             = var.jwt_authorizer_name
+
+  jwt_configuration {
+    audience = [var.lgtm_cat_bff_client_id]
+    issuer   = var.jwt_authorizer_issuer_url
+  }
+}
+
 resource "aws_apigatewayv2_route" "api" {
   api_id             = aws_apigatewayv2_api.api.id
   route_key          = "ANY /{proxy+}"
   target             = "integrations/${aws_apigatewayv2_integration.api.id}"
-  authorization_type = "NONE"
+  authorization_type = "JWT"
+  authorizer_id      = aws_apigatewayv2_authorizer.jwt_authorizer.id
 }
 
 resource "aws_apigatewayv2_integration" "api" {

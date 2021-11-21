@@ -28,3 +28,15 @@ variable "certificate_arn" {
 variable "zone_id" {
   type = string
 }
+
+variable "jwt_authorizer_name" {
+  type = string
+}
+
+variable "jwt_authorizer_issuer_url" {
+  type = string
+}
+
+variable "lgtm_cat_bff_client_id" {
+  type = string
+}
