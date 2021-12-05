@@ -50,6 +50,14 @@ variable "app_password" {
   type = string
 }
 
+variable "stg_app_username" {
+  type = string
+}
+
+variable "stg_app_password" {
+  type = string
+}
+
 variable "proxy_engine" {
   type = string
 }
