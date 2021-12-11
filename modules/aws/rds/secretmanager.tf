@@ -1,5 +1,5 @@
 resource "aws_secretsmanager_secret" "rds_connection" {
-  name = "${var.rds_name}/rds-connection"
+  name = "/prod/${var.rds_name}/rds-connection"
 }
 
 resource "aws_secretsmanager_secret_version" "rds_connection" {
