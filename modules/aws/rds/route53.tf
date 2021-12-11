@@ -1,4 +1,4 @@
-resource "aws_route53_zone" "rds" {
+resource "aws_route53_zone" "rds_stg" {
   name = "stg"
 
   vpc {
@@ -8,8 +8,8 @@ resource "aws_route53_zone" "rds" {
   comment = "stg RDS Local Domain"
 }
 
-resource "aws_route53_record" "rds" {
-  zone_id = aws_route53_zone.rds.zone_id
+resource "aws_route53_record" "rds_stg" {
+  zone_id = aws_route53_zone.rds_stg.zone_id
   name    = var.rds_domain_name
   type    = "CNAME"
 
@@ -17,8 +17,8 @@ resource "aws_route53_record" "rds" {
   records = [aws_rds_cluster.rds_cluster.endpoint]
 }
 
-resource "aws_route53_record" "rds_proxy" {
-  zone_id = aws_route53_zone.rds.zone_id
+resource "aws_route53_record" "rds_proxy_stg" {
+  zone_id = aws_route53_zone.rds_stg.zone_id
   name    = var.rds_proxy_domain_name
   type    = "CNAME"
 
