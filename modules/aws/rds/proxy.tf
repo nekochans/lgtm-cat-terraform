@@ -14,6 +14,12 @@ resource "aws_db_proxy" "rds_proxy" {
     secret_arn  = aws_secretsmanager_secret.rds_connection.arn
   }
 
+  auth {
+    auth_scheme = "SECRETS"
+    iam_auth    = "DISABLED"
+    secret_arn  = aws_secretsmanager_secret.rds_connection_stg.arn
+  }
+
   depends_on = [aws_rds_cluster.rds_cluster, aws_secretsmanager_secret_version.rds_connection]
 }
 

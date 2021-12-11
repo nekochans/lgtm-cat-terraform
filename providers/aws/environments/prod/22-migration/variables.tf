@@ -7,7 +7,7 @@ locals {
 }
 
 data "aws_secretsmanager_secret" "secret" {
-  name = "/prod/lgtm_cat"
+  name = "/prod/lgtm-cat"
 }
 
 data "aws_secretsmanager_secret_version" "secret" {

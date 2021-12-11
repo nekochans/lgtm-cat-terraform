@@ -14,12 +14,24 @@ locals {
   app_username                = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_app_user"]
   rds_domain_name             = "lgtm-cat-rds"
   rds_proxy_domain_name       = "lgtm-cat-rds-proxy"
+
+  // stg
+  stg_app_password = jsondecode(data.aws_secretsmanager_secret_version.secret_stg.secret_string)["db_app_password"]
+  stg_app_username = jsondecode(data.aws_secretsmanager_secret_version.secret_stg.secret_string)["db_app_user"]
 }
 
 data "aws_secretsmanager_secret" "secret" {
-  name = "/prod/lgtm_cat"
+  name = "/prod/lgtm-cat"
 }
 
 data "aws_secretsmanager_secret_version" "secret" {
   secret_id = data.aws_secretsmanager_secret.secret.id
+}
+
+data "aws_secretsmanager_secret" "secret_stg" {
+  name = "/stg/lgtm-cat"
+}
+
+data "aws_secretsmanager_secret_version" "secret_stg" {
+  secret_id = data.aws_secretsmanager_secret.secret_stg.id
 }
