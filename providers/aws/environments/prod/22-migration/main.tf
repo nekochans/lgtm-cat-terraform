@@ -1,6 +1,7 @@
 module "migration" {
   source = "../../../../../modules/aws/ecs-migration"
 
+  env            = local.env
   vpc_id         = data.terraform_remote_state.network.outputs.vpc_id
   migration_name = local.migration_name
   db_hostname    = local.db_hostname
