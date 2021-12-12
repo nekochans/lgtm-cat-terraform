@@ -15,12 +15,13 @@ module "rds" {
   proxy_engine                   = local.proxy_engine
   app_password                   = local.app_password
   app_username                   = local.app_username
-  stg_lambda_securitygroup_id    = data.terraform_remote_state.stg_lambda_securitygroup.outputs.lambda_security_group_id
   migration_ecs_securitygroup_id = data.terraform_remote_state.migration.outputs.migration_ecs_securitygroup_id
   rds_domain_name                = local.rds_domain_name
   rds_proxy_domain_name          = local.rds_proxy_domain_name
 
   // STG用
-  stg_app_password = local.stg_app_password
-  stg_app_username = local.stg_app_username
+  stg_lambda_securitygroup_id        = data.terraform_remote_state.stg_lambda_securitygroup.outputs.lambda_security_group_id
+  stg_app_password                   = local.stg_app_password
+  stg_app_username                   = local.stg_app_username
+  stg_migration_ecs_securitygroup_id = data.terraform_remote_state.stg_migration.outputs.migration_ecs_securitygroup_id
 }
