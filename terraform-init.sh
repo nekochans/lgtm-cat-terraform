@@ -16,6 +16,7 @@ tfstateDirList='
 /data/providers/aws/environments/stg/17-cognito
 /data/providers/aws/environments/stg/20-api
 /data/providers/aws/environments/stg/21-lambda-securitygroup
+/data/providers/aws/environments/stg/22-migration
 '
 
 for tfstateDir in ${tfstateDirList}; do
