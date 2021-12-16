@@ -89,18 +89,12 @@ resource "aws_rds_cluster_parameter_group" "rds_cluster_parameter_group" {
 
   parameter {
     name  = "collation_connection"
-    value = "utf8mb4_bin"
+    value = "utf8mb4_0900_bin"
   }
 
   parameter {
     name  = "collation_server"
-    value = "utf8mb4_bin"
-  }
-
-  parameter {
-    name         = "character-set-client-handshake"
-    value        = "1"
-    apply_method = "pending-reboot"
+    value = "utf8mb4_0900_bin"
   }
 
   parameter {
