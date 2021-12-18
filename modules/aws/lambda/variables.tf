@@ -21,3 +21,11 @@ variable "s3_bucket_name" {
 variable "lgtm_images_cdn_domain" {
   type = string
 }
+
+variable "vpc_id" {
+  type = string
+}
+
+variable "subnet_ids" {
+  type = list(string)
+}
