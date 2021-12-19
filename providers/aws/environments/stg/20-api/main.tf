@@ -9,6 +9,10 @@ module "lambda" {
   lgtm_images_cdn_domain     = data.terraform_remote_state.images.outputs.lgtm_images_cdn_domain
   vpc_id                     = data.terraform_remote_state.network.outputs.vpc_id
   subnet_ids                 = data.terraform_remote_state.network.outputs.subnet_public_ids
+  db_hostname                = local.db_hostname
+  db_name                    = local.db_name
+  db_password                = local.db_password
+  db_username                = local.db_username
 }
 
 module "api_gateway" {

@@ -27,6 +27,10 @@ resource "aws_lambda_function" "api" {
       REGION                 = data.aws_region.current.name
       UPLOAD_S3_BUCKET_NAME  = var.s3_bucket_name
       LGTM_IMAGES_CDN_DOMAIN = var.lgtm_images_cdn_domain
+      DB_HOSTNAME            = var.db_hostname
+      DB_PASSWORD            = var.db_password
+      DB_USERNAME            = var.db_username
+      DB_NAME                = var.db_name
     }
   }
 
