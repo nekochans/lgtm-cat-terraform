@@ -75,3 +75,12 @@ resource "aws_security_group_rule" "rds_from_stg_lambda" {
   protocol                 = "tcp"
   source_security_group_id = var.stg_lambda_securitygroup_id
 }
+
+resource "aws_security_group_rule" "rds_from_stg_api_lambda" {
+  security_group_id        = aws_security_group.rds_proxy.id
+  type                     = "ingress"
+  from_port                = "3306"
+  to_port                  = "3306"
+  protocol                 = "tcp"
+  source_security_group_id = var.stg_api_lambda_securitygroup_id
+}

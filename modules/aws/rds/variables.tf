@@ -66,6 +66,10 @@ variable "stg_lambda_securitygroup_id" {
   type = string
 }
 
+variable "stg_api_lambda_securitygroup_id" {
+  type = string
+}
+
 variable "migration_ecs_securitygroup_id" {
   type = string
 }

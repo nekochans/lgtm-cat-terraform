@@ -9,3 +9,7 @@ output "lambda_invoke_arn" {
 output "lambda_arn" {
   value = aws_lambda_function.api.arn
 }
+
+output "lambda_securitygroup_id" {
+  value = aws_security_group.lambda.id
+}
