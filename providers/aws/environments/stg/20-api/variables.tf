@@ -13,6 +13,11 @@ locals {
   jwt_authorizer_name       = "${local.env}-jwt-authorizer"
   jwt_authorizer_issuer_url = "https://${data.terraform_remote_state.cognito.outputs.idp_endpoint}"
   lgtm_cat_bff_client_id    = data.terraform_remote_state.cognito.outputs.lgtm_cat_bff_client_id
+
+  db_password = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_app_password"]
+  db_username = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_app_user"]
+  db_name     = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_name"]
+  db_hostname = "lgtm-cat-rds-proxy.${local.env}"
 }
 
 variable "main_domain_name" {
@@ -22,4 +27,12 @@ variable "main_domain_name" {
 
 data "aws_route53_zone" "api" {
   name = var.main_domain_name
+}
+
+data "aws_secretsmanager_secret" "secret" {
+  name = "/stg/lgtm-cat"
+}
+
+data "aws_secretsmanager_secret_version" "secret" {
+  secret_id = data.aws_secretsmanager_secret.secret.id
 }

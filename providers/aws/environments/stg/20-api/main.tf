@@ -7,6 +7,12 @@ module "lambda" {
   log_retention_in_days      = local.log_retention_in_days
   s3_bucket_name             = data.terraform_remote_state.images.outputs.upload_images_bucket_name
   lgtm_images_cdn_domain     = data.terraform_remote_state.images.outputs.lgtm_images_cdn_domain
+  vpc_id                     = data.terraform_remote_state.network.outputs.vpc_id
+  subnet_ids                 = data.terraform_remote_state.network.outputs.subnet_public_ids
+  db_hostname                = local.db_hostname
+  db_name                    = local.db_name
+  db_password                = local.db_password
+  db_username                = local.db_username
 }
 
 module "api_gateway" {
