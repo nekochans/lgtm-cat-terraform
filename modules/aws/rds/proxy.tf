@@ -5,7 +5,7 @@ resource "aws_db_proxy" "rds_proxy" {
   idle_client_timeout    = 120
   require_tls            = false
   role_arn               = aws_iam_role.rds_proxy_role.arn
-  vpc_security_group_ids = [aws_security_group.rds_proxy.id]
+  vpc_security_group_ids = [aws_security_group.rds_proxy.id, aws_security_group.rds_proxy_stg.id]
   vpc_subnet_ids         = var.subnet_ids
 
   auth {
@@ -67,8 +67,36 @@ resource "aws_security_group_rule" "rds_proxy_from_bastion_server" {
   source_security_group_id = aws_security_group.bastion_ecs.id
 }
 
-resource "aws_security_group_rule" "rds_from_stg_lambda" {
+resource "aws_security_group_rule" "rds_from_api_lambda" {
   security_group_id        = aws_security_group.rds_proxy.id
+  type                     = "ingress"
+  from_port                = "3306"
+  to_port                  = "3306"
+  protocol                 = "tcp"
+  source_security_group_id = var.api_lambda_securitygroup_id
+}
+
+resource "aws_security_group" "rds_proxy_stg" {
+  name        = "stg-${var.rds_name}-rds-proxy"
+  description = "${var.rds_name} RDS Proxy Security Group for stg"
+  vpc_id      = var.vpc_id
+
+  tags = {
+    Name = "stg-${var.rds_name}-rds-proxy"
+  }
+}
+
+resource "aws_security_group_rule" "rds_proxy_egress_stg" {
+  security_group_id = aws_security_group.rds_proxy_stg.id
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
+
+resource "aws_security_group_rule" "rds_from_stg_lambda" {
+  security_group_id        = aws_security_group.rds_proxy_stg.id
   type                     = "ingress"
   from_port                = "3306"
   to_port                  = "3306"
@@ -77,7 +105,7 @@ resource "aws_security_group_rule" "rds_from_stg_lambda" {
 }
 
 resource "aws_security_group_rule" "rds_from_stg_api_lambda" {
-  security_group_id        = aws_security_group.rds_proxy.id
+  security_group_id        = aws_security_group.rds_proxy_stg.id
   type                     = "ingress"
   from_port                = "3306"
   to_port                  = "3306"
