@@ -6,7 +6,7 @@ resource "aws_rds_cluster" "rds_cluster" {
   preferred_backup_window         = "19:30-20:00"
   skip_final_snapshot             = true
   storage_encrypted               = false
-  vpc_security_group_ids          = [aws_security_group.rds_cluster.id]
+  vpc_security_group_ids          = [aws_security_group.rds_cluster.id, aws_security_group.rds_cluster_stg.id]
   preferred_maintenance_window    = "wed:20:15-wed:20:45"
   db_subnet_group_name            = aws_db_subnet_group.rds_subnet_group.name
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.rds_cluster_parameter_group.name
@@ -153,8 +153,36 @@ resource "aws_security_group_rule" "rds_from_migration" {
   source_security_group_id = var.migration_ecs_securitygroup_id
 }
 
+resource "aws_security_group" "rds_cluster_stg" {
+  name        = "stg-${var.rds_name}-rds"
+  description = "${var.rds_name}-rds Security Group for stg"
+  vpc_id      = var.vpc_id
+
+  tags = {
+    Name = "stg-${var.rds_name}-rds"
+  }
+}
+
+resource "aws_security_group_rule" "rds_egress_stg" {
+  security_group_id = aws_security_group.rds_cluster_stg.id
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
+
+resource "aws_security_group_rule" "rds_from_rds_proxy_stg" {
+  security_group_id        = aws_security_group.rds_cluster_stg.id
+  type                     = "ingress"
+  from_port                = "3306"
+  to_port                  = "3306"
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.rds_proxy_stg.id
+}
+
 resource "aws_security_group_rule" "rds_from_migration_stg" {
-  security_group_id        = aws_security_group.rds_cluster.id
+  security_group_id        = aws_security_group.rds_cluster_stg.id
   type                     = "ingress"
   from_port                = "3306"
   to_port                  = "3306"
