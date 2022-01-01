@@ -10,6 +10,7 @@ tfstateDirList='
 /data/providers/aws/environments/prod/16-ses
 /data/providers/aws/environments/prod/17-cognito
 /data/providers/aws/environments/prod/20-api
+/data/providers/aws/environments/prod/21-lambda-securitygroup
 /data/providers/aws/environments/prod/22-migration
 /data/providers/aws/environments/prod/23-rds
 /data/providers/aws/environments/stg/11-acm
