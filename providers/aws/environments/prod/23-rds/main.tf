@@ -20,6 +20,7 @@ module "rds" {
   app_password                   = local.app_password
   app_username                   = local.app_username
   migration_ecs_securitygroup_id = data.terraform_remote_state.migration.outputs.migration_ecs_securitygroup_id
+  api_lambda_securitygroup_id    = data.terraform_remote_state.api.outputs.api_lambda_securitygroup_id
 
   // STG用
   stg_app_password                   = local.stg_app_password
