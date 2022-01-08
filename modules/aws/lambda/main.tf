@@ -15,7 +15,7 @@ resource "aws_lambda_function" "api" {
   runtime          = "go1.x"
 
   memory_size = 128
-  timeout     = 900
+  timeout     = 29
 
   vpc_config {
     subnet_ids         = var.subnet_ids
