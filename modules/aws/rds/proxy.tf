@@ -67,6 +67,15 @@ resource "aws_security_group_rule" "rds_proxy_from_bastion_server" {
   source_security_group_id = aws_security_group.bastion_ecs.id
 }
 
+resource "aws_security_group_rule" "rds_from_lambda" {
+  security_group_id        = aws_security_group.rds_proxy.id
+  type                     = "ingress"
+  from_port                = "3306"
+  to_port                  = "3306"
+  protocol                 = "tcp"
+  source_security_group_id = var.lambda_securitygroup_id
+}
+
 resource "aws_security_group_rule" "rds_from_api_lambda" {
   security_group_id        = aws_security_group.rds_proxy.id
   type                     = "ingress"

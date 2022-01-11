@@ -62,6 +62,10 @@ variable "proxy_engine" {
   type = string
 }
 
+variable "lambda_securitygroup_id" {
+  type = string
+}
+
 variable "api_lambda_securitygroup_id" {
   type = string
 }
