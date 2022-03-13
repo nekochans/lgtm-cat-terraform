@@ -33,11 +33,11 @@ resource "aws_s3_bucket" "cat_images_bucket" {
   lifecycle_rule {
     enabled = true
     // 失効した削除マーカーまたは不完全なマルチパートアップロードを削除する
-    abort_incomplete_multipart_upload_days = 1
+    abort_incomplete_multipart_upload_days = 7
 
-    // オブジェクトの有効期限
-    expiration {
-      days = 10
+    // 古いバージョンは30日で削除
+    noncurrent_version_expiration {
+      days = 30
     }
   }
 }
