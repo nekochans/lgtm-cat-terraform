@@ -2,24 +2,18 @@ resource "aws_s3_bucket" "upload_images_bucket" {
   bucket = var.upload_images_bucket_name
 
   force_destroy = true
-
-
 }
 
 resource "aws_s3_bucket" "cat_images_bucket" {
   bucket = var.cat_images_bucket_name
 
   force_destroy = true
-
-
 }
 
 resource "aws_s3_bucket" "created_lgtm_images_bucket" {
   bucket = var.created_lgtm_images_bucket_name
 
   force_destroy = true
-
-
 }
 
 resource "aws_s3_bucket" "lgtm_images_bucket" {
@@ -27,8 +21,6 @@ resource "aws_s3_bucket" "lgtm_images_bucket" {
 
   // TODO 検証の為、何度か作り直しする可能性があるので一時的に force_destroy = true に設定
   force_destroy = true
-
-
 }
 
 resource "aws_cloudfront_origin_access_identity" "lgtm_images_bucket" {
@@ -65,7 +57,6 @@ resource "aws_s3_bucket_policy" "read_lgtm_images" {
 resource "aws_s3_bucket" "lgtm_images_access_logs" {
   bucket        = "${var.lgtm_images_bucket_name}-logs"
   force_destroy = true
-
 }
 
 resource "aws_cloudfront_distribution" "lgtm_images_cdn" {
