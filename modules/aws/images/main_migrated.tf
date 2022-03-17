@@ -149,6 +149,7 @@ resource "aws_s3_bucket_acl" "upload_images_bucket_acl" {
 resource "aws_s3_bucket_lifecycle_configuration" "upload_images_bucket_lifecycle_configuration" {
   bucket = aws_s3_bucket.upload_images_bucket.id
   rule {
+    id     = "purge-old-object"
     status = "Enabled"
     abort_incomplete_multipart_upload {
       days_after_initiation = 1
@@ -175,6 +176,7 @@ resource "aws_s3_bucket_acl" "cat_images_bucket_acl" {
 resource "aws_s3_bucket_lifecycle_configuration" "cat_images_bucket_lifecycle_configuration" {
   bucket = aws_s3_bucket.cat_images_bucket.id
   rule {
+    id = "purge-noncurrent-version"
     abort_incomplete_multipart_upload {
       days_after_initiation = 7
     }
@@ -200,6 +202,7 @@ resource "aws_s3_bucket_acl" "created_lgtm_images_bucket_acl" {
 resource "aws_s3_bucket_lifecycle_configuration" "created_lgtm_images_bucket_lifecycle_configuration" {
   bucket = aws_s3_bucket.created_lgtm_images_bucket.id
   rule {
+    id     = "purge-old-version"
     status = "Enabled"
     abort_incomplete_multipart_upload {
       days_after_initiation = 1
@@ -226,6 +229,7 @@ resource "aws_s3_bucket_acl" "lgtm_images_bucket_acl" {
 resource "aws_s3_bucket_lifecycle_configuration" "lgtm_images_bucket_lifecycle_configuration" {
   bucket = aws_s3_bucket.lgtm_images_bucket.id
   rule {
+    id     = "purge-noncurrent-version"
     status = "Enabled"
     abort_incomplete_multipart_upload {
       days_after_initiation = 7
@@ -246,6 +250,7 @@ resource "aws_s3_bucket_versioning" "lgtm_images_bucket_versioning" {
 resource "aws_s3_bucket_lifecycle_configuration" "lgtm_images_access_logs_lifecycle_configuration" {
   bucket = aws_s3_bucket.lgtm_images_access_logs.id
   rule {
+    id     = "abort-incomplete-multipart-upload"
     status = "Enabled"
     abort_incomplete_multipart_upload {
       days_after_initiation = 7
