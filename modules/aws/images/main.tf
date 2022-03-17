@@ -1,90 +1,34 @@
 resource "aws_s3_bucket" "upload_images_bucket" {
   bucket = var.upload_images_bucket_name
-  acl    = "private"
 
   force_destroy = true
 
-  versioning {
-    enabled = false
-  }
 
-  lifecycle_rule {
-    enabled = true
-    // 失効した削除マーカーまたは不完全なマルチパートアップロードを削除する
-    abort_incomplete_multipart_upload_days = 1
-
-    // オブジェクトの有効期限
-    expiration {
-      days = 10
-    }
-  }
 }
 
 resource "aws_s3_bucket" "cat_images_bucket" {
   bucket = var.cat_images_bucket_name
-  acl    = "private"
 
   force_destroy = true
 
-  versioning {
-    enabled = true
-  }
 
-  lifecycle_rule {
-    enabled = true
-    // 失効した削除マーカーまたは不完全なマルチパートアップロードを削除する
-    abort_incomplete_multipart_upload_days = 7
-
-    // 古いバージョンは30日で削除
-    noncurrent_version_expiration {
-      days = 30
-    }
-  }
 }
 
 resource "aws_s3_bucket" "created_lgtm_images_bucket" {
   bucket = var.created_lgtm_images_bucket_name
-  acl    = "private"
 
   force_destroy = true
 
-  versioning {
-    enabled = false
-  }
 
-  lifecycle_rule {
-    enabled = true
-    // 失効した削除マーカーまたは不完全なマルチパートアップロードを削除する
-    abort_incomplete_multipart_upload_days = 1
-
-    // オブジェクトの有効期限
-    expiration {
-      days = 10
-    }
-  }
 }
 
 resource "aws_s3_bucket" "lgtm_images_bucket" {
   bucket = var.lgtm_images_bucket_name
-  acl    = "private"
 
   // TODO 検証の為、何度か作り直しする可能性があるので一時的に force_destroy = true に設定
   force_destroy = true
 
-  versioning {
-    enabled = true
-  }
 
-  lifecycle_rule {
-    enabled = true
-    // 失効した削除マーカーまたは不完全なマルチパートアップロードを削除する
-    abort_incomplete_multipart_upload_days = 7
-
-    // 古いバージョンは30日で削除
-    noncurrent_version_expiration {
-      days = 30
-    }
-  }
 }
 
 resource "aws_cloudfront_origin_access_identity" "lgtm_images_bucket" {
@@ -122,10 +66,6 @@ resource "aws_s3_bucket" "lgtm_images_access_logs" {
   bucket        = "${var.lgtm_images_bucket_name}-logs"
   force_destroy = true
 
-  lifecycle_rule {
-    enabled                                = true
-    abort_incomplete_multipart_upload_days = 7
-  }
 }
 
 resource "aws_cloudfront_distribution" "lgtm_images_cdn" {
@@ -198,5 +138,122 @@ resource "aws_route53_record" "lgtm_images" {
     evaluate_target_health = false
     name                   = aws_cloudfront_distribution.lgtm_images_cdn.domain_name
     zone_id                = aws_cloudfront_distribution.lgtm_images_cdn.hosted_zone_id
+  }
+}
+
+resource "aws_s3_bucket_acl" "upload_images_bucket_acl" {
+  bucket = aws_s3_bucket.upload_images_bucket.id
+  acl    = "private"
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "upload_images_bucket_lifecycle_configuration" {
+  bucket = aws_s3_bucket.upload_images_bucket.id
+  rule {
+    id     = "purge-old-object"
+    status = "Enabled"
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 1
+    }
+    // オブジェクトの有効期限
+    expiration {
+      days = 10
+    }
+  }
+}
+
+resource "aws_s3_bucket_versioning" "upload_images_bucket_versioning" {
+  bucket = aws_s3_bucket.upload_images_bucket.id
+  versioning_configuration {
+    status = "Suspended"
+  }
+}
+
+resource "aws_s3_bucket_acl" "cat_images_bucket_acl" {
+  bucket = aws_s3_bucket.cat_images_bucket.id
+  acl    = "private"
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "cat_images_bucket_lifecycle_configuration" {
+  bucket = aws_s3_bucket.cat_images_bucket.id
+  rule {
+    id = "purge-noncurrent-version"
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+    status = "Enabled"
+    noncurrent_version_expiration {
+      noncurrent_days = 30
+    }
+  }
+}
+
+resource "aws_s3_bucket_versioning" "cat_images_bucket_versioning" {
+  bucket = aws_s3_bucket.cat_images_bucket.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_acl" "created_lgtm_images_bucket_acl" {
+  bucket = aws_s3_bucket.created_lgtm_images_bucket.id
+  acl    = "private"
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "created_lgtm_images_bucket_lifecycle_configuration" {
+  bucket = aws_s3_bucket.created_lgtm_images_bucket.id
+  rule {
+    id     = "purge-old-version"
+    status = "Enabled"
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 1
+    }
+    // オブジェクトの有効期限
+    expiration {
+      days = 10
+    }
+  }
+}
+
+resource "aws_s3_bucket_versioning" "created_lgtm_images_bucket_versioning" {
+  bucket = aws_s3_bucket.created_lgtm_images_bucket.id
+  versioning_configuration {
+    status = "Suspended"
+  }
+}
+
+resource "aws_s3_bucket_acl" "lgtm_images_bucket_acl" {
+  bucket = aws_s3_bucket.lgtm_images_bucket.id
+  acl    = "private"
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "lgtm_images_bucket_lifecycle_configuration" {
+  bucket = aws_s3_bucket.lgtm_images_bucket.id
+  rule {
+    id     = "purge-noncurrent-version"
+    status = "Enabled"
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+    noncurrent_version_expiration {
+      noncurrent_days = 30
+    }
+  }
+}
+
+resource "aws_s3_bucket_versioning" "lgtm_images_bucket_versioning" {
+  bucket = aws_s3_bucket.lgtm_images_bucket.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "lgtm_images_access_logs_lifecycle_configuration" {
+  bucket = aws_s3_bucket.lgtm_images_access_logs.id
+  rule {
+    id     = "abort-incomplete-multipart-upload"
+    status = "Enabled"
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
   }
 }
