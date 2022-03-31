@@ -24,6 +24,13 @@ resource "aws_apigatewayv2_route" "api" {
   authorizer_id      = aws_apigatewayv2_authorizer.jwt_authorizer.id
 }
 
+resource "aws_apigatewayv2_route" "api_options_route" {
+  api_id             = aws_apigatewayv2_api.api.id
+  route_key          = "OPTIONS /{proxy+}"
+  target             = "integrations/${aws_apigatewayv2_integration.api.id}"
+  authorization_type = "NONE"
+}
+
 resource "aws_apigatewayv2_integration" "api" {
   api_id = aws_apigatewayv2_api.api.id
 
