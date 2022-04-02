@@ -2,6 +2,13 @@ resource "aws_apigatewayv2_api" "api" {
   name          = var.api_gateway_name
   protocol_type = "HTTP"
   target        = var.lambda_arn
+
+  cors_configuration {
+    allow_credentials = true
+    allow_headers     = ["authorization", "content-type"]
+    allow_methods     = ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    allow_origins     = var.api_allow_origins
+  }
 }
 
 resource "aws_apigatewayv2_authorizer" "jwt_authorizer" {
