@@ -2,6 +2,13 @@ resource "aws_apigatewayv2_api" "api" {
   name          = var.api_gateway_name
   protocol_type = "HTTP"
   target        = var.lambda_arn
+
+  cors_configuration {
+    allow_credentials = true
+    allow_headers     = ["authorization", "content-type"]
+    allow_methods     = ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    allow_origins     = var.api_allow_origins
+  }
 }
 
 resource "aws_apigatewayv2_authorizer" "jwt_authorizer" {
@@ -22,6 +29,13 @@ resource "aws_apigatewayv2_route" "api" {
   target             = "integrations/${aws_apigatewayv2_integration.api.id}"
   authorization_type = "JWT"
   authorizer_id      = aws_apigatewayv2_authorizer.jwt_authorizer.id
+}
+
+resource "aws_apigatewayv2_route" "api_options_route" {
+  api_id             = aws_apigatewayv2_api.api.id
+  route_key          = "OPTIONS /{proxy+}"
+  target             = "integrations/${aws_apigatewayv2_integration.api.id}"
+  authorization_type = "NONE"
 }
 
 resource "aws_apigatewayv2_integration" "api" {

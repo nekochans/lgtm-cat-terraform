@@ -40,3 +40,7 @@ variable "jwt_authorizer_issuer_url" {
 variable "lgtm_cat_bff_client_id" {
   type = string
 }
+
+variable "api_allow_origins" {
+  type = list(string)
+}

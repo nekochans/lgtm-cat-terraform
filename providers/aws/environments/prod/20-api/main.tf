@@ -29,6 +29,7 @@ module "api_gateway" {
   jwt_authorizer_name       = local.jwt_authorizer_name
   jwt_authorizer_issuer_url = local.jwt_authorizer_issuer_url
   lgtm_cat_bff_client_id    = local.lgtm_cat_bff_client_id
+  api_allow_origins         = var.api_allow_origins
 
   depends_on = [module.lambda]
 }

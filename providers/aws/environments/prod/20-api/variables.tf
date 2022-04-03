@@ -36,3 +36,8 @@ data "aws_secretsmanager_secret" "secret" {
 data "aws_secretsmanager_secret_version" "secret" {
   secret_id = data.aws_secretsmanager_secret.secret.id
 }
+
+variable "api_allow_origins" {
+  type    = list(string)
+  default = ["https://lgtmeow.com"]
+}
