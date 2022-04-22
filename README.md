@@ -148,6 +148,28 @@ lgtm-cat-terraform/
 
 ステージング用のリソースが本番用のリソースに依存しているケースもあるので、先に本番用の `providers/aws/environments/prod` 配下の `terraform apply` を全て終わらせておく必要があります。
 
+### 依存関係 providers/aws/environments/○○/20-api について
+
+以下の2つに関しては先に https://github.com/nekochans/lgtm-cat-image-recognition のデプロイを実施し作成されたAPI GatewayのIDをSecretManagerの中に登録しておく必要があります。
+
+- `providers/aws/environments/stg/20-api`
+- `providers/aws/environments/prod/20-api`
+
+SecretManagerはステージング用、本番用の2種類作成します。
+
+名称は以下の通りです。
+
+- `/stg/lgtm-cat/image-recognition`
+- `/prod/lgtm-cat/image-recognition`
+
+中身は以下のように https://github.com/nekochans/lgtm-cat-image-recognition のデプロイ時に生成されるAPI GatewayのIDを設定します。
+
+```json
+{
+  "api_id": "xxxxxxxxxx"
+}
+```
+
 ## 設計方針
 
 - 今はAWSのみだが、他のproviderが増えても大丈夫なように `providers/` を作ってあります
