@@ -67,6 +67,19 @@ resource "aws_cognito_resource_server" "lgtm_cat_api" {
   user_pool_id = aws_cognito_user_pool.user_pool.id
 }
 
+// https://github.com/nekochans/lgtm-cat-image-recognition に定義されているAPIはこのscopeによって保護する
+resource "aws_cognito_resource_server" "lgtm_cat_image_recognition_api" {
+  name       = var.lgtm_cat_image_recognition_api_resource_server_name
+  identifier = var.lgtm_cat_image_recognition_api_resource_server_identifier
+
+  scope {
+    scope_description = "lgtm-cat-image-recognitionに定義されているAPIを全て利用出来る権限。"
+    scope_name        = "all"
+  }
+
+  user_pool_id = aws_cognito_user_pool.user_pool.id
+}
+
 // https://github.com/nekochans/lgtm-cat-frontend のサーバーサイド部分でのみ利用する
 resource "aws_cognito_user_pool_client" "lgtm_cat_bff_client" {
   name                          = var.lgtm_cat_bff_client_name
@@ -76,7 +89,7 @@ resource "aws_cognito_user_pool_client" "lgtm_cat_bff_client" {
 
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["client_credentials"]
-  allowed_oauth_scopes                 = ["${aws_cognito_resource_server.lgtm_cat_api.identifier}/all"]
+  allowed_oauth_scopes                 = ["${aws_cognito_resource_server.lgtm_cat_api.identifier}/all", "${aws_cognito_resource_server.lgtm_cat_image_recognition_api.identifier}/all"]
 
   depends_on = [aws_cognito_resource_server.lgtm_cat_api]
 }
