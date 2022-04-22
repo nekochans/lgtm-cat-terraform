@@ -44,3 +44,11 @@ variable "lgtm_cat_bff_client_id" {
 variable "api_allow_origins" {
   type = list(string)
 }
+
+variable "image_recognition_api_gateway_id" {
+  type = string
+}
+
+variable "image_recognition_api_gateway_domain_name" {
+  type = string
+}
