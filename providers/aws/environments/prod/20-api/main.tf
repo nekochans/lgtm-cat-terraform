@@ -18,18 +18,19 @@ module "lambda" {
 module "api_gateway" {
   source = "../../../../../modules/aws/api-gateway"
 
-  lambda_function_name      = module.lambda.lambda_function_name
-  lambda_invoke_arn         = module.lambda.lambda_invoke_arn
-  lambda_arn                = module.lambda.lambda_arn
-  api_gateway_name          = local.api_gateway_name
-  api_gateway_domain_name   = local.api_gateway_domain_name
-  auto_deploy               = local.auto_deploy
-  certificate_arn           = local.certificate_arn
-  zone_id                   = data.aws_route53_zone.api.zone_id
-  jwt_authorizer_name       = local.jwt_authorizer_name
-  jwt_authorizer_issuer_url = local.jwt_authorizer_issuer_url
-  lgtm_cat_bff_client_id    = local.lgtm_cat_bff_client_id
-  api_allow_origins         = var.api_allow_origins
-
-  depends_on = [module.lambda]
+  lambda_function_name                      = module.lambda.lambda_function_name
+  lambda_invoke_arn                         = module.lambda.lambda_invoke_arn
+  lambda_arn                                = module.lambda.lambda_arn
+  api_gateway_name                          = local.api_gateway_name
+  api_gateway_domain_name                   = local.api_gateway_domain_name
+  auto_deploy                               = local.auto_deploy
+  certificate_arn                           = local.certificate_arn
+  zone_id                                   = data.aws_route53_zone.api.zone_id
+  jwt_authorizer_name                       = local.jwt_authorizer_name
+  jwt_authorizer_issuer_url                 = local.jwt_authorizer_issuer_url
+  lgtm_cat_bff_client_id                    = local.lgtm_cat_bff_client_id
+  api_allow_origins                         = var.api_allow_origins
+  image_recognition_api_gateway_id          = local.image_recognition_api_gateway_id
+  image_recognition_api_gateway_domain_name = local.image_recognition_api_gateway_domain_name
+  depends_on                                = [module.lambda]
 }

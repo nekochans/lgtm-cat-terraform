@@ -14,6 +14,9 @@ locals {
   jwt_authorizer_issuer_url = "https://${data.terraform_remote_state.cognito.outputs.idp_endpoint}"
   lgtm_cat_bff_client_id    = data.terraform_remote_state.cognito.outputs.lgtm_cat_bff_client_id
 
+  image_recognition_api_gateway_id          = jsondecode(data.aws_secretsmanager_secret_version.image_recognition_secret.secret_string)["api_id"]
+  image_recognition_api_gateway_domain_name = "image-recognition-api.${var.main_domain_name}"
+
   db_password = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_app_password"]
   db_username = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_app_user"]
   db_name     = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_name"]
@@ -40,4 +43,12 @@ data "aws_secretsmanager_secret_version" "secret" {
 variable "api_allow_origins" {
   type    = list(string)
   default = ["https://lgtmeow.com"]
+}
+
+data "aws_secretsmanager_secret" "image_recognition_secret" {
+  name = "/prod/lgtm-cat/image-recognition"
+}
+
+data "aws_secretsmanager_secret_version" "image_recognition_secret" {
+  secret_id = data.aws_secretsmanager_secret.image_recognition_secret.id
 }
