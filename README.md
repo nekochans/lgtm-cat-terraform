@@ -185,23 +185,26 @@ SecretManagerはステージング用、本番用の2種類作成します。
 |----------------|----------------|
 | ファイル名     | ケバブケース   |
 | ディレクトリ名 | ケバブケース   |
-| リソースID     | スネークケース |
-| リソース名     | ケバブケース   |
+| リソース、データソース名 | スネークケース   |
+| リソースID     | ケバブケース |
 | 変数名         | スネークケース |
 
-リソースIDというのは `resource` や `data` 等のTerraformの予約語に付けられる名前です。
+
+リソース名とは `resource` や `data` 等のTerraformの予約語に付けられる名前です。
+
+下記の例だと `ssh_from_all_to_bastion` がそれに該当します。
+
 
 ```hcl
-resource "aws_security_group_rule" "ssh_from_all_to_bastion" {
-}
+resource "aws_security_group_rule" "ssh_from_all_to_bastion" {}
 ```
 
-リソース名はそのリソースの中で一意になっている必要がある値です。
+リソースIDとはそのリソースの中で一意になっている必要がある値です。
 
 下記の例だと `key_name` がそれに該当します。
 
 ```hcl
-resource "aws_key_pair" "ssh_key_pair" {
+resource "aws_key_pair" "ssh" {
   public_key = "${file(var.ssh_public_key_path)}"
   key_name   = "${terraform.workspace}-ssh-key"
 }
