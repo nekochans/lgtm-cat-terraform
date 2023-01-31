@@ -33,7 +33,7 @@ resource "aws_ecs_task_definition" "api" {
   depends_on = [aws_cloudwatch_log_group.api_app_log]
 }
 
-resource "aws_ecs_service" "bff_service" {
+resource "aws_ecs_service" "api" {
   name             = var.name
   cluster          = aws_ecs_cluster.api.id
   task_definition  = aws_ecs_task_definition.api.arn

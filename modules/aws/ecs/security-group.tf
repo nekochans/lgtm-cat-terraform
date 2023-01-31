@@ -37,7 +37,7 @@ resource "aws_security_group_rule" "api_ecs_egress" {
 }
 
 
-resource "aws_security_group_rule" "bff_ecs_from_alb" {
+resource "aws_security_group_rule" "api_ecs_from_alb" {
   security_group_id        = aws_security_group.api_ecs.id
   type                     = "ingress"
   from_port                = "80"
