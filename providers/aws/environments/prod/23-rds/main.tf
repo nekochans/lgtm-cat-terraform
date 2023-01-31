@@ -29,4 +29,5 @@ module "rds" {
   stg_migration_ecs_securitygroup_id = data.terraform_remote_state.stg_migration.outputs.migration_ecs_securitygroup_id
   stg_lambda_securitygroup_id        = data.terraform_remote_state.stg_lambda_securitygroup.outputs.lambda_security_group_id
   stg_api_lambda_securitygroup_id    = data.terraform_remote_state.stg_api.outputs.api_lambda_securitygroup_id
+  stg_api_ecs_securitygroup_id    = data.terraform_remote_state.stg_api.outputs.api_ecs_securitygroup_id
 }
