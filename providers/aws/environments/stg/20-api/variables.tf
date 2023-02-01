@@ -31,6 +31,7 @@ locals {
   ecs_service_desired_count = 1
   ecs_task_cpu              = 256
   ecs_task_memory           = 512
+  sentry_dsn                = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["sentry_dsn"]
 }
 
 variable "main_domain_name" {
