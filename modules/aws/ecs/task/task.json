@@ -26,9 +26,17 @@
       {
         "name": "DB_NAME",
         "valueFrom": "${db_name_arn}"
+      },
+      {
+        "name": "SENTRY_DSN",
+        "valueFrom": "${sentry_dsn_arn}"
       }
      ],
       "environment": [
+      {
+          "name": "ENV",
+          "value": "${env}"
+      },
       {
         "name": "REGION",
         "value": "${aws_region}"

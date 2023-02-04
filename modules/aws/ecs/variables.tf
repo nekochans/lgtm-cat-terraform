@@ -52,5 +52,8 @@ variable "db_name" {
 variable "lgtm_images_cdn_domain" {
   type = string
 }
+variable "sentry_dsn" {
+  type = string
+}
 
 data "aws_region" "current" {}

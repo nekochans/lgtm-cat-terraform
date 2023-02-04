@@ -56,4 +56,5 @@ module "ecs" {
   db_password               = local.db_password
   db_username               = local.db_username
   lgtm_images_cdn_domain    = data.terraform_remote_state.images.outputs.lgtm_images_cdn_domain
+  sentry_dsn                = local.sentry_dsn
 }

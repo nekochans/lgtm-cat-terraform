@@ -25,3 +25,10 @@ resource "aws_ssm_parameter" "db_password" {
   value     = var.db_password
   overwrite = true
 }
+
+resource "aws_ssm_parameter" "sentry_dsn" {
+  name      = "/${var.env}/lgtm-cat/api/SENTRY_DSN"
+  type      = "SecureString"
+  value     = var.sentry_dsn
+  overwrite = true
+}

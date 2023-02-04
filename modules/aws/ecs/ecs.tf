@@ -11,6 +11,7 @@ resource "aws_ecs_task_definition" "api" {
   family       = var.name
   network_mode = "awsvpc"
   container_definitions = templatefile("${path.module}/task/task.json", {
+    env                       = var.env
     app_image_url             = aws_ecr_repository.api_app.repository_url
     app_aws_logs_group        = aws_cloudwatch_log_group.api_app_log.name
     nginx_image_url           = aws_ecr_repository.api_nginx.repository_url
@@ -19,6 +20,7 @@ resource "aws_ecs_task_definition" "api" {
     db_hostname_arn           = aws_ssm_parameter.db_hostname.arn
     db_password_arn           = aws_ssm_parameter.db_password.arn
     db_username_arn           = aws_ssm_parameter.db_username.arn
+    sentry_dsn_arn            = aws_ssm_parameter.sentry_dsn.arn
     db_name_arn               = aws_ssm_parameter.db_name.arn
     upload_images_bucket_name = var.upload_images_bucket_name
     lgtm_images_cdn_domain    = var.lgtm_images_cdn_domain
@@ -48,7 +50,8 @@ resource "aws_ecs_service" "api" {
   }
 
   network_configuration {
-    subnets = var.subnet_public_ids
+    subnets          = var.subnet_public_ids
+    assign_public_ip = true
 
     security_groups = [
       aws_security_group.api_ecs.id,
