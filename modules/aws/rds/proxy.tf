@@ -85,6 +85,15 @@ resource "aws_security_group_rule" "rds_from_api_lambda" {
   source_security_group_id = var.api_lambda_securitygroup_id
 }
 
+resource "aws_security_group_rule" "rds_from_api_ecs" {
+  security_group_id        = aws_security_group.rds_proxy.id
+  type                     = "ingress"
+  from_port                = "3306"
+  to_port                  = "3306"
+  protocol                 = "tcp"
+  source_security_group_id = var.api_ecs_securitygroup_id
+}
+
 resource "aws_security_group" "rds_proxy_stg" {
   name        = "stg-${var.rds_name}-rds-proxy"
   description = "${var.rds_name} RDS Proxy Security Group for stg"
