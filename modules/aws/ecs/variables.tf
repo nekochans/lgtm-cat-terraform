@@ -55,5 +55,8 @@ variable "lgtm_images_cdn_domain" {
 variable "sentry_dsn" {
   type = string
 }
+variable "cognito_user_pool_id" {
+  type = string
+}
 
 data "aws_region" "current" {}

@@ -57,4 +57,5 @@ module "ecs" {
   db_username               = local.db_username
   lgtm_images_cdn_domain    = data.terraform_remote_state.images.outputs.lgtm_images_cdn_domain
   sentry_dsn                = local.sentry_dsn
+  cognito_user_pool_id      = data.terraform_remote_state.cognito.outputs.cognito_user_pool_id
 }
