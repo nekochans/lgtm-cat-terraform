@@ -70,6 +70,11 @@ variable "api_lambda_securitygroup_id" {
   type = string
 }
 
+variable "api_ecs_securitygroup_id" {
+  type = string
+}
+
+
 variable "stg_lambda_securitygroup_id" {
   type = string
 }
