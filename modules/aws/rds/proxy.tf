@@ -76,15 +76,6 @@ resource "aws_security_group_rule" "rds_from_lambda" {
   source_security_group_id = var.lambda_securitygroup_id
 }
 
-resource "aws_security_group_rule" "rds_from_api_lambda" {
-  security_group_id        = aws_security_group.rds_proxy.id
-  type                     = "ingress"
-  from_port                = "3306"
-  to_port                  = "3306"
-  protocol                 = "tcp"
-  source_security_group_id = var.api_lambda_securitygroup_id
-}
-
 resource "aws_security_group_rule" "rds_from_api_ecs" {
   security_group_id        = aws_security_group.rds_proxy.id
   type                     = "ingress"
@@ -120,15 +111,6 @@ resource "aws_security_group_rule" "rds_from_stg_lambda" {
   to_port                  = "3306"
   protocol                 = "tcp"
   source_security_group_id = var.stg_lambda_securitygroup_id
-}
-
-resource "aws_security_group_rule" "rds_from_stg_api_lambda" {
-  security_group_id        = aws_security_group.rds_proxy_stg.id
-  type                     = "ingress"
-  from_port                = "3306"
-  to_port                  = "3306"
-  protocol                 = "tcp"
-  source_security_group_id = var.stg_api_lambda_securitygroup_id
 }
 
 resource "aws_security_group_rule" "rds_from_stg_api_ecs" {

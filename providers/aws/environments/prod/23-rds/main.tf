@@ -21,7 +21,6 @@ module "rds" {
   app_username                   = local.app_username
   migration_ecs_securitygroup_id = data.terraform_remote_state.migration.outputs.migration_ecs_securitygroup_id
   lambda_securitygroup_id        = data.terraform_remote_state.lambda_securitygroup.outputs.lambda_security_group_id
-  api_lambda_securitygroup_id    = data.terraform_remote_state.api.outputs.api_lambda_securitygroup_id
   api_ecs_securitygroup_id       = data.terraform_remote_state.api.outputs.api_ecs_securitygroup_id
 
   // STG用
@@ -29,6 +28,5 @@ module "rds" {
   stg_app_username                   = local.stg_app_username
   stg_migration_ecs_securitygroup_id = data.terraform_remote_state.stg_migration.outputs.migration_ecs_securitygroup_id
   stg_lambda_securitygroup_id        = data.terraform_remote_state.stg_lambda_securitygroup.outputs.lambda_security_group_id
-  stg_api_lambda_securitygroup_id    = data.terraform_remote_state.stg_api.outputs.api_lambda_securitygroup_id
   stg_api_ecs_securitygroup_id       = data.terraform_remote_state.stg_api.outputs.api_ecs_securitygroup_id
 }
