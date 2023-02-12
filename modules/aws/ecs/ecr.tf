@@ -1,9 +1,11 @@
 resource "aws_ecr_repository" "api_app" {
-  name = "${var.name}-app"
+  name                 = "${var.name}-app"
+  image_tag_mutability = "IMMUTABLE"
 }
 
 resource "aws_ecr_repository" "api_nginx" {
-  name = "${var.name}-nginx"
+  name                 = "${var.name}-nginx"
+  image_tag_mutability = "IMMUTABLE"
 }
 
 locals {
