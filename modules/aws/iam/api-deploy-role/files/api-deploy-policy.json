@@ -27,7 +27,9 @@
         "ecr:CompleteLayerUpload",
         "ecr:InitiateLayerUpload",
         "ecr:PutImage",
-        "ecr:UploadLayerPart"
+        "ecr:UploadLayerPart",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage"
       ],
       "Resource": "arn:aws:ecr:${region}:${account_id}:repository/*"
     },
