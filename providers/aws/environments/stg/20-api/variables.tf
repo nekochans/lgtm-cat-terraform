@@ -11,8 +11,6 @@ locals {
   ecs_domain_name           = "${local.env}-api.${var.main_domain_name}"
   enable_container_insights = false
   ecs_service_desired_count = 1
-  ecs_task_cpu              = 256
-  ecs_task_memory           = 512
   log_retention_in_days     = 3
 
   sentry_dsn  = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["sentry_dsn"]

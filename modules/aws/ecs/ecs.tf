@@ -7,44 +7,11 @@ resource "aws_ecs_cluster" "api" {
   }
 }
 
-resource "aws_ecs_task_definition" "api" {
-  family       = var.name
-  network_mode = "awsvpc"
-  container_definitions = templatefile("${path.module}/task/task.json", {
-    env                       = var.env
-    app_image_url             = aws_ecr_repository.api_app.repository_url
-    app_aws_logs_group        = aws_cloudwatch_log_group.api_app_log.name
-    nginx_image_url           = aws_ecr_repository.api_nginx.repository_url
-    nginx_aws_logs_group      = aws_cloudwatch_log_group.api_nginx_log.name
-    aws_region                = data.aws_region.current.name
-    db_hostname_arn           = aws_ssm_parameter.db_hostname.arn
-    db_password_arn           = aws_ssm_parameter.db_password.arn
-    db_username_arn           = aws_ssm_parameter.db_username.arn
-    sentry_dsn_arn            = aws_ssm_parameter.sentry_dsn.arn
-    db_name_arn               = aws_ssm_parameter.db_name.arn
-    cognito_user_pool_id_arn  = aws_ssm_parameter.cognito_user_pool_id.arn
-    upload_images_bucket_name = var.upload_images_bucket_name
-    lgtm_images_cdn_domain    = var.lgtm_images_cdn_domain
-  })
-
-  cpu                      = var.ecs_task_cpu
-  memory                   = var.ecs_task_memory
-  requires_compatibilities = ["FARGATE"]
-  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
-  task_role_arn            = aws_iam_role.ecs_task.arn
-
-  runtime_platform {
-    operating_system_family = "LINUX"
-    cpu_architecture        = "ARM64"
-  }
-
-  depends_on = [aws_cloudwatch_log_group.api_app_log]
-}
-
 resource "aws_ecs_service" "api" {
   name             = var.name
   cluster          = aws_ecs_cluster.api.id
-  task_definition  = aws_ecs_task_definition.api.arn
+  // タスクの定義は Terraform ではなく lgtm-cat-api リポジトリで管理
+  task_definition  = ""
   desired_count    = var.ecs_service_desired_count
   launch_type      = "FARGATE"
   platform_version = "1.4.0"
