@@ -8,8 +8,8 @@ resource "aws_ecs_cluster" "api" {
 }
 
 resource "aws_ecs_service" "api" {
-  name             = var.name
-  cluster          = aws_ecs_cluster.api.id
+  name    = var.name
+  cluster = aws_ecs_cluster.api.id
   // タスクの定義は Terraform ではなく lgtm-cat-api リポジトリで管理
   task_definition  = ""
   desired_count    = var.ecs_service_desired_count
