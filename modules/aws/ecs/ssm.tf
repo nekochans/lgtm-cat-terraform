@@ -32,3 +32,10 @@ resource "aws_ssm_parameter" "sentry_dsn" {
   value     = var.sentry_dsn
   overwrite = true
 }
+
+resource "aws_ssm_parameter" "cognito_user_pool_id" {
+  name      = "/${var.env}/lgtm-cat/api/COGNITO_USER_POOL_ID"
+  type      = "SecureString"
+  value     = var.cognito_user_pool_id
+  overwrite = true
+}

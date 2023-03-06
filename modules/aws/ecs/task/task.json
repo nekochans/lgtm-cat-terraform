@@ -30,6 +30,10 @@
       {
         "name": "SENTRY_DSN",
         "valueFrom": "${sentry_dsn_arn}"
+      },
+      {
+        "name": "COGNITO_USER_POOL_ID",
+        "valueFrom": "${cognito_user_pool_id_arn}"
       }
      ],
       "environment": [
@@ -48,10 +52,6 @@
       {
         "name": "LGTM_IMAGES_CDN_DOMAIN",
         "value": "${lgtm_images_cdn_domain}"
-      },
-      {
-        "name": "COGNITO_USER_POOL_ID",
-        "value": "${cognito_user_pool_id}"
       }
     ],
     "logConfiguration": {

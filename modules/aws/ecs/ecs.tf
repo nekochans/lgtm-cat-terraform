@@ -22,9 +22,9 @@ resource "aws_ecs_task_definition" "api" {
     db_username_arn           = aws_ssm_parameter.db_username.arn
     sentry_dsn_arn            = aws_ssm_parameter.sentry_dsn.arn
     db_name_arn               = aws_ssm_parameter.db_name.arn
+    cognito_user_pool_id_arn  = aws_ssm_parameter.cognito_user_pool_id.arn
     upload_images_bucket_name = var.upload_images_bucket_name
     lgtm_images_cdn_domain    = var.lgtm_images_cdn_domain
-    cognito_user_pool_id      = var.cognito_user_pool_id
   })
 
   cpu                      = var.ecs_task_cpu
