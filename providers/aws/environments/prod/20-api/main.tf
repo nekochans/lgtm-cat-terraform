@@ -20,14 +20,11 @@ module "ecs" {
   enable_container_insights = local.enable_container_insights
   log_retention_in_days     = local.log_retention_in_days
   ecs_service_desired_count = local.ecs_service_desired_count
-  ecs_task_cpu              = local.ecs_task_cpu
-  ecs_task_memory           = local.ecs_task_memory
   upload_images_bucket_name = data.terraform_remote_state.images.outputs.upload_images_bucket_name
   db_hostname               = local.db_hostname
   db_name                   = local.db_name
   db_password               = local.db_password
   db_username               = local.db_username
-  lgtm_images_cdn_domain    = data.terraform_remote_state.images.outputs.lgtm_images_cdn_domain
   sentry_dsn                = local.sentry_dsn
   cognito_user_pool_id      = data.terraform_remote_state.cognito.outputs.cognito_user_pool_id
 }

@@ -28,12 +28,6 @@ variable "log_retention_in_days" {
 variable "ecs_service_desired_count" {
   type = number
 }
-variable "ecs_task_cpu" {
-  type = number
-}
-variable "ecs_task_memory" {
-  type = number
-}
 variable "upload_images_bucket_name" {
   type = string
 }
@@ -47,9 +41,6 @@ variable "db_username" {
   type = string
 }
 variable "db_name" {
-  type = string
-}
-variable "lgtm_images_cdn_domain" {
   type = string
 }
 variable "sentry_dsn" {
