@@ -7,7 +7,7 @@ resource "aws_scheduler_schedule_group" "stop_ecs" {
 resource "aws_scheduler_schedule" "stop_ecs" {
   for_each = { for i in var.ecs_targets : i.cluster => i }
 
-  name       = "${var.env}-stop-ecs"
+  name       = "${var.env}-stop-ecs-${each.value.service}"
   group_name = aws_scheduler_schedule_group.stop_ecs[0].name
   state      = "ENABLED"
 
