@@ -8,3 +8,6 @@ services:
     volumes:
       - .:/data
       - $HOME/.aws:/root/.aws
+      - $HOME/.terraform.d/plugin-cache:/.plugin-cache
+    environment:
+      - TF_PLUGIN_CACHE_DIR=/.plugin-cache

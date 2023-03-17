@@ -235,6 +235,16 @@ Your configuration already matches the changes detected above. If you'd like to 
 
 このように `No changes. Your infrastructure matches the configuration.` が表示されている場合は `terraform apply -refresh-only` を実行して下さい。
 
+## Provider Plugin Cache
+
+Provider Plugin Cache 機能を有効化しています。 機能については、以下のドキュメントを参考にしてください。
+
+[Provider Plugin Cache](https://developer.hashicorp.com/terraform/cli/config/config-file#provider-plugin-cache)
+
+ドキュメントにも記載されていますが、キャッシュされたプラグインは Terraform によって削除されることはありません。
+
+未使用のプラグインは手動で削除してください。
+
 ## ECS Exec
 
 踏み台用の ECS Cluster を構築しています。
