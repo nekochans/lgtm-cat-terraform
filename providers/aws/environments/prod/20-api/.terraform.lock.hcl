@@ -21,9 +21,9 @@ provider "registry.terraform.io/hashicorp/archive" {
 }
 
 provider "registry.terraform.io/hashicorp/aws" {
-  version     = "4.67.0"
-  constraints = "4.67.0"
+  version     = "5.1.0"
+  constraints = "5.1.0"
   hashes = [
-    "h1:dCRc4GqsyfqHEMjgtlM1EympBcgTmcTkWaJmtd91+KA=",
+    "h1:cD/xic4fsOb2yPp4UARXqzjN8frK9QSxLM4cPfYz8Hg=",
   ]
 }
