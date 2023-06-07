@@ -1,7 +1,7 @@
 locals {
   rds_name                    = "lgtm-cat"
   engine                      = "aurora-mysql"
-  engine_version              = "8.0.mysql_aurora.3.01.0"
+  engine_version              = "8.0.mysql_aurora.3.02.2"
   master_password             = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_master_password"]
   master_username             = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_master_user"]
   instance_class              = "db.t4g.medium"
