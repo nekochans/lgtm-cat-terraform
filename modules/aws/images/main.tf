@@ -115,9 +115,7 @@ resource "aws_cloudfront_distribution" "lgtm_images_cdn" {
     domain_name = aws_s3_bucket.lgtm_images_bucket.bucket_domain_name
     origin_id   = "S3-${aws_s3_bucket.lgtm_images_bucket.bucket}"
 
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.lgtm_images_bucket.cloudfront_access_identity_path
-    }
+    origin_access_control_id = aws_cloudfront_origin_access_control.lgtm_images_bucket.id
 
     custom_header {
       name  = "Accept"
