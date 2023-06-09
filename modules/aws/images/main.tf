@@ -27,6 +27,13 @@ resource "aws_cloudfront_origin_access_identity" "lgtm_images_bucket" {
   comment = "${aws_s3_bucket.lgtm_images_bucket.bucket} origin access identity"
 }
 
+resource "aws_cloudfront_origin_access_control" "lgtm_images_bucket" {
+  name                              = "${var.lgtm_images_bucket_name}-oac"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
+
 data "aws_iam_policy_document" "read_lgtm_images" {
   statement {
     actions   = ["s3:GetObject"]
