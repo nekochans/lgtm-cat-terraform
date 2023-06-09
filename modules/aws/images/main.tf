@@ -40,26 +40,6 @@ data "aws_iam_policy_document" "read_lgtm_images" {
     resources = ["${aws_s3_bucket.lgtm_images_bucket.arn}/*"]
 
     principals {
-      identifiers = [aws_cloudfront_origin_access_identity.lgtm_images_bucket.iam_arn]
-      type        = "AWS"
-    }
-  }
-
-  statement {
-    actions   = ["s3:ListBucket"]
-    resources = [aws_s3_bucket.lgtm_images_bucket.arn]
-
-    principals {
-      identifiers = [aws_cloudfront_origin_access_identity.lgtm_images_bucket.iam_arn]
-      type        = "AWS"
-    }
-  }
-
-  statement {
-    actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.lgtm_images_bucket.arn}/*"]
-
-    principals {
       identifiers = ["cloudfront.amazonaws.com"]
       type        = "Service"
     }
