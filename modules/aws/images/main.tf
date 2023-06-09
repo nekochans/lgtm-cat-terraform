@@ -47,6 +47,22 @@ data "aws_iam_policy_document" "read_lgtm_images" {
       type        = "AWS"
     }
   }
+
+  statement {
+    actions   = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.lgtm_images_bucket.arn}/*"]
+
+    principals {
+      identifiers = ["cloudfront.amazonaws.com"]
+      type        = "Service"
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:SourceArn"
+      values   = [aws_cloudfront_distribution.lgtm_images_cdn.arn]
+    }
+  }
 }
 
 resource "aws_s3_bucket_policy" "read_lgtm_images" {
