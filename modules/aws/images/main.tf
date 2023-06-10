@@ -27,24 +27,27 @@ resource "aws_cloudfront_origin_access_identity" "lgtm_images_bucket" {
   comment = "${aws_s3_bucket.lgtm_images_bucket.bucket} origin access identity"
 }
 
+resource "aws_cloudfront_origin_access_control" "lgtm_images_bucket" {
+  name                              = "${var.lgtm_images_bucket_name}-oac"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
+
 data "aws_iam_policy_document" "read_lgtm_images" {
   statement {
     actions   = ["s3:GetObject"]
     resources = ["${aws_s3_bucket.lgtm_images_bucket.arn}/*"]
 
     principals {
-      identifiers = [aws_cloudfront_origin_access_identity.lgtm_images_bucket.iam_arn]
-      type        = "AWS"
+      identifiers = ["cloudfront.amazonaws.com"]
+      type        = "Service"
     }
-  }
 
-  statement {
-    actions   = ["s3:ListBucket"]
-    resources = [aws_s3_bucket.lgtm_images_bucket.arn]
-
-    principals {
-      identifiers = [aws_cloudfront_origin_access_identity.lgtm_images_bucket.iam_arn]
-      type        = "AWS"
+    condition {
+      test     = "StringEquals"
+      variable = "aws:SourceArn"
+      values   = [aws_cloudfront_distribution.lgtm_images_cdn.arn]
     }
   }
 }
@@ -92,9 +95,7 @@ resource "aws_cloudfront_distribution" "lgtm_images_cdn" {
     domain_name = aws_s3_bucket.lgtm_images_bucket.bucket_domain_name
     origin_id   = "S3-${aws_s3_bucket.lgtm_images_bucket.bucket}"
 
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.lgtm_images_bucket.cloudfront_access_identity_path
-    }
+    origin_access_control_id = aws_cloudfront_origin_access_control.lgtm_images_bucket.id
 
     custom_header {
       name  = "Accept"
