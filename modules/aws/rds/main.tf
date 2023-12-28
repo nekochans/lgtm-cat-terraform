@@ -153,6 +153,15 @@ resource "aws_security_group_rule" "rds_from_ecs" {
   source_security_group_id = var.api_ecs_securitygroup_id
 }
 
+resource "aws_security_group_rule" "rds_from_lambda" {
+  security_group_id        = aws_security_group.rds_cluster.id
+  type                     = "ingress"
+  from_port                = "3306"
+  to_port                  = "3306"
+  protocol                 = "tcp"
+  source_security_group_id = var.lambda_securitygroup_id
+}
+
 resource "aws_security_group_rule" "rds_from_migration" {
   security_group_id        = aws_security_group.rds_cluster.id
   type                     = "ingress"
@@ -197,6 +206,15 @@ resource "aws_security_group_rule" "rds_from_ecs_stg" {
   to_port                  = "3306"
   protocol                 = "tcp"
   source_security_group_id = var.stg_api_ecs_securitygroup_id
+}
+
+resource "aws_security_group_rule" "rds_from_lambda_stg" {
+  security_group_id        = aws_security_group.rds_cluster_stg.id
+  type                     = "ingress"
+  from_port                = "3306"
+  to_port                  = "3306"
+  protocol                 = "tcp"
+  source_security_group_id = var.stg_lambda_securitygroup_id
 }
 
 resource "aws_security_group_rule" "rds_from_migration_stg" {
