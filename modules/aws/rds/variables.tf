@@ -58,10 +58,6 @@ variable "stg_app_password" {
   type = string
 }
 
-variable "proxy_engine" {
-  type = string
-}
-
 variable "lambda_securitygroup_id" {
   type = string
 }
@@ -69,7 +65,6 @@ variable "lambda_securitygroup_id" {
 variable "api_ecs_securitygroup_id" {
   type = string
 }
-
 
 variable "stg_lambda_securitygroup_id" {
   type = string
@@ -88,9 +83,5 @@ variable "stg_migration_ecs_securitygroup_id" {
 }
 
 variable "rds_domain_name" {
-  type = string
-}
-
-variable "rds_proxy_domain_name" {
   type = string
 }

@@ -9,11 +9,9 @@ locals {
   parameter_group_family      = "aurora-mysql8.0"
   cluster_availability_zones  = ["ap-northeast-1a", "ap-northeast-1c"]
   instance_availability_zones = ["ap-northeast-1a"]
-  proxy_engine                = "mysql"
   app_password                = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_app_password"]
   app_username                = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_app_user"]
   rds_domain_name             = "lgtm-cat-rds"
-  rds_proxy_domain_name       = "lgtm-cat-rds-proxy"
 
   // stg
   stg_app_password = jsondecode(data.aws_secretsmanager_secret_version.secret_stg.secret_string)["db_app_password"]
