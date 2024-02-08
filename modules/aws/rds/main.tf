@@ -31,6 +31,7 @@ resource "aws_rds_cluster_instance" "rds_cluster_instance" {
   monitoring_role_arn     = aws_iam_role.rds_monitoring_role.arn
   monitoring_interval     = 60
   availability_zone       = each.value
+  publicly_accessible     = true
 }
 
 resource "aws_db_subnet_group" "rds_subnet_group" {
