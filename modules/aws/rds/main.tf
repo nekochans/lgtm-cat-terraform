@@ -104,14 +104,14 @@ resource "aws_rds_cluster_parameter_group" "rds_cluster_parameter_group" {
   }
 
   parameter {
-    name  = "gtid-mode"
-    value = "ON"
+    name         = "gtid-mode"
+    value        = "ON"
     apply_method = "pending-reboot"
   }
 
   parameter {
-    name  = "enforce_gtid_consistency"
-    value = "ON"
+    name         = "enforce_gtid_consistency"
+    value        = "ON"
     apply_method = "pending-reboot"
   }
 
@@ -121,8 +121,8 @@ resource "aws_rds_cluster_parameter_group" "rds_cluster_parameter_group" {
   }
 
   parameter {
-    name  = "binlog_format"
-    value = "ROW"
+    name         = "binlog_format"
+    value        = "ROW"
     apply_method = "pending-reboot"
   }
 }
