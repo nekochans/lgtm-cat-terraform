@@ -182,6 +182,22 @@ resource "aws_security_group_rule" "rds_from_migration" {
   source_security_group_id = var.migration_ecs_securitygroup_id
 }
 
+resource "aws_security_group_rule" "rds_from_planetscale" {
+  security_group_id = aws_security_group.rds_cluster.id
+  type              = "ingress"
+  from_port         = "3306"
+  to_port           = "3306"
+  protocol          = "tcp"
+  cidr_blocks = [
+    "3.209.149.66/32",
+    "3.215.97.46/32",
+    "34.193.111.15/32",
+    "3.115.153.48/32",
+    "35.75.255.19/32",
+    "52.68.124.171/32"
+  ]
+}
+
 resource "aws_security_group" "rds_cluster_stg" {
   name        = "stg-${var.rds_name}-rds"
   description = "${var.rds_name}-rds Security Group for stg"
