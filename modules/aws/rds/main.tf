@@ -31,6 +31,7 @@ resource "aws_rds_cluster_instance" "rds_cluster_instance" {
   monitoring_role_arn     = aws_iam_role.rds_monitoring_role.arn
   monitoring_interval     = 60
   availability_zone       = each.value
+  publicly_accessible     = true
 }
 
 resource "aws_db_subnet_group" "rds_subnet_group" {
@@ -102,8 +103,27 @@ resource "aws_rds_cluster_parameter_group" "rds_cluster_parameter_group" {
     value = "Asia/Tokyo"
   }
 
-  lifecycle {
-    ignore_changes = all
+  parameter {
+    name         = "gtid-mode"
+    value        = "ON"
+    apply_method = "pending-reboot"
+  }
+
+  parameter {
+    name         = "enforce_gtid_consistency"
+    value        = "ON"
+    apply_method = "pending-reboot"
+  }
+
+  parameter {
+    name  = "sql_mode"
+    value = "NO_ZERO_IN_DATE,NO_ZERO_DATE,ONLY_FULL_GROUP_BY"
+  }
+
+  parameter {
+    name         = "binlog_format"
+    value        = "ROW"
+    apply_method = "pending-reboot"
   }
 }
 
