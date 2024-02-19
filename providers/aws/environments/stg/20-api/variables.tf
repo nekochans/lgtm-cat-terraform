@@ -17,7 +17,7 @@ locals {
   db_password = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_app_password"]
   db_username = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_app_user"]
   db_name     = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_name"]
-  db_hostname = "lgtm-cat-rds.${local.env}"
+  db_hostname = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_host"]
 }
 
 variable "main_domain_name" {
