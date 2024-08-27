@@ -8,4 +8,9 @@ module "lgtm_image_processor" {
   stepfunctions_name            = local.stepfunctions_name
   stepfunctions_iam_policy_name = local.stepfunctions_iam_policy_name
   stepfunctions_iam_role_name   = local.stepfunctions_iam_role_name
+  eventbridge_rule_name         = local.eventbridge_rule_name
+  eventbridge_rule_target_id    = local.eventbridge_rule_target_id
+  eventbridge_iam_role_name     = local.eventbridge_iam_role_name
+  eventbridge_iam_policy_name   = local.eventbridge_iam_policy_name
+  upload_images_bucket          = local.upload_images_bucket
 }

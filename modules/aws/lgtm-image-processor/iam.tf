@@ -65,3 +65,40 @@ resource "aws_iam_role_policy_attachment" "step_functions_policy_attachment" {
   role       = aws_iam_role.step_functions.id
   policy_arn = aws_iam_policy.step_functions.arn
 }
+
+data "aws_iam_policy_document" "assume_role" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["events.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
+}
+
+# EventBridge
+resource "aws_iam_role" "eventbridge" {
+  name               = var.eventbridge_iam_role_name
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+}
+
+data "aws_iam_policy_document" "eventbridge" {
+  statement {
+    effect    = "Allow"
+    actions   = ["states:StartExecution"]
+    resources = [aws_sfn_state_machine.lgtm_image_processor.arn]
+  }
+}
+
+resource "aws_iam_policy" "eventbridge" {
+  name   = var.eventbridge_iam_policy_name
+  policy = data.aws_iam_policy_document.eventbridge.json
+}
+
+resource "aws_iam_role_policy_attachment" "eventbridge" {
+  role       = aws_iam_role.eventbridge.name
+  policy_arn = aws_iam_policy.eventbridge.arn
+}
