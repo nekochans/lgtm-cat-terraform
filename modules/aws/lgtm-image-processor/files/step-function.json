@@ -1,22 +1,6 @@
 {
-  "StartAt": "judgeImage",
+  "StartAt": "generateLgtmImage",
   "States": {
-    "judgeImage": {
-      "Type": "Task",
-      "Resource": "arn:aws:states:::lambda:invoke",
-      "OutputPath": "$.Payload",
-      "Parameters": {
-        "FunctionName": "${lambda_arn}:$LATEST",
-        "Payload": {
-          "process": "judgeImage",
-          "image": {
-            "bucketName.$": "$.detail.bucket.name",
-            "objectKey.$": "$.detail.object.key"
-          }
-        }
-      },
-      "Next": "generateLgtmImage"
-    },
     "generateLgtmImage": {
       "Type": "Task",
       "Resource": "arn:aws:states:::lambda:invoke",
@@ -26,8 +10,8 @@
         "Payload": {
           "process": "generateLgtmImage",
           "image": {
-            "bucketName.$": "$.image.bucketName",
-            "objectKey.$": "$.image.objectKey"
+            "bucketName.$": "$.detail.bucket.name",
+            "objectKey.$": "$.detail.object.key"
           }
         }
       },
@@ -40,7 +24,23 @@
       "Parameters": {
         "FunctionName": "${lambda_arn}:$LATEST",
         "Payload": {
-          "process": "generateLgtmImage",
+          "process": "convertToWebp",
+          "image": {
+            "bucketName.$": "$.image.bucketName",
+            "objectKey.$": "$.image.objectKey"
+          }
+        }
+      },
+      "Next": "storeToDb"
+    },
+    "storeToDb": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "OutputPath": "$.Payload",
+      "Parameters": {
+        "FunctionName": "${lambda_arn}:$LATEST",
+        "Payload": {
+          "process": "storeToDb",
           "image": {
             "bucketName.$": "$.image.bucketName",
             "objectKey.$": "$.image.objectKey"
