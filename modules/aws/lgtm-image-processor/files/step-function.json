@@ -1,0 +1,53 @@
+{
+  "StartAt": "generateLgtmImage",
+  "States": {
+    "generateLgtmImage": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "OutputPath": "$.Payload",
+      "Parameters": {
+        "FunctionName": "${lambda_arn}:$LATEST",
+        "Payload": {
+          "process": "generateLgtmImage",
+          "image": {
+            "bucketName.$": "$.detail.bucket.name",
+            "objectKey.$": "$.detail.object.key"
+          }
+        }
+      },
+      "Next": "convertToWebp"
+    },
+    "convertToWebp": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "OutputPath": "$.Payload",
+      "Parameters": {
+        "FunctionName": "${lambda_arn}:$LATEST",
+        "Payload": {
+          "process": "convertToWebp",
+          "image": {
+            "bucketName.$": "$.image.bucketName",
+            "objectKey.$": "$.image.objectKey"
+          }
+        }
+      },
+      "Next": "storeToDb"
+    },
+    "storeToDb": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "OutputPath": "$.Payload",
+      "Parameters": {
+        "FunctionName": "${lambda_arn}:$LATEST",
+        "Payload": {
+          "process": "storeToDb",
+          "image": {
+            "bucketName.$": "$.image.bucketName",
+            "objectKey.$": "$.image.objectKey"
+          }
+        }
+      },
+      "End": true
+    }
+  }
+}

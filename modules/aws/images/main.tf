@@ -10,6 +10,11 @@ resource "aws_s3_bucket" "cat_images_bucket" {
   force_destroy = true
 }
 
+resource "aws_s3_bucket_notification" "cat_images_bucket" {
+  bucket      = aws_s3_bucket.cat_images_bucket.id // 最終的にはupload_images_bucketを指定する
+  eventbridge = true
+}
+
 resource "aws_s3_bucket" "created_lgtm_images_bucket" {
   bucket = var.created_lgtm_images_bucket_name
 
