@@ -60,3 +60,11 @@ variable "convert_to_webp_upload_bucket" {
 
 data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
+
+data "aws_secretsmanager_secret" "secret" {
+  name = "/stg/lgtm-cat"
+}
+
+data "aws_secretsmanager_secret_version" "secret" {
+  secret_id = data.aws_secretsmanager_secret.secret.id
+}

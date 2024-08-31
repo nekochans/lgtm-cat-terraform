@@ -13,6 +13,10 @@ resource "aws_lambda_function" "lgtm_image_processor" {
       JUDGE_IMAGE_UPLOAD_BUCKET         = var.judge_image_upload_bucket
       GENERATE_LGTM_IMAGE_UPLOAD_BUCKET = var.generate_lgtm_image_upload_bucket
       CONVERT_TO_WEBP_UPLOAD_BUCKET     = var.convert_to_webp_upload_bucket
+      DB_HOSTNAME                       = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_host"]
+      DB_USERNAME                       = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_app_user"]
+      DB_PASSWORD                       = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_app_password"]
+      DB_NAME                           = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_name"]
     }
   }
 
