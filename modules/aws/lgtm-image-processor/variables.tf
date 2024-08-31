@@ -46,5 +46,17 @@ variable "eventbridge_iam_policy_name" {
   type = string
 }
 
+variable "judge_image_upload_bucket" {
+  type = string
+}
+
+variable "generate_lgtm_image_upload_bucket" {
+  type = string
+}
+
+variable "convert_to_webp_upload_bucket" {
+  type = string
+}
+
 data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}

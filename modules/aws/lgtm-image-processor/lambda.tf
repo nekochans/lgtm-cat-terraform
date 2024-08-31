@@ -8,6 +8,14 @@ resource "aws_lambda_function" "lgtm_image_processor" {
   memory_size   = 128
   timeout       = 30
 
+  environment {
+    variables = {
+      JUDGE_IMAGE_UPLOAD_BUCKET         = var.judge_image_upload_bucket
+      GENERATE_LGTM_IMAGE_UPLOAD_BUCKET = var.generate_lgtm_image_upload_bucket
+      CONVERT_TO_WEBP_UPLOAD_BUCKET     = var.convert_to_webp_upload_bucket
+    }
+  }
+
   lifecycle {
     ignore_changes = [
       last_modified,

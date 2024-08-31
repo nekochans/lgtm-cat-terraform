@@ -16,4 +16,8 @@ locals {
   eventbridge_iam_role_name   = "${local.env}-eventbridge-${local.service_name}-invoke-stepfunctions--role"
   eventbridge_iam_policy_name = "${local.env}-eventbridge-${local.service_name}-invoke-stepfunctions--policy"
   upload_images_bucket        = "${local.env}-lgtmeow-cat-images"
+
+  judge_image_upload_bucket         = "${local.env}-lgtmeow-cat-images"
+  generate_lgtm_image_upload_bucket = "${local.env}-lgtmeow-created-lgtm-images"
+  convert_to_webp_upload_bucket     = "${local.env}-lgtmeow-images"
 }
