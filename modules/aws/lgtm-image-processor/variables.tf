@@ -1,3 +1,7 @@
+variable "env" {
+  type = string
+}
+
 variable "ecr_name" {
   type = string
 }
@@ -62,7 +66,7 @@ data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
 data "aws_secretsmanager_secret" "secret" {
-  name = "/stg/lgtm-cat"
+  name = "/${var.env}/lgtm-cat"
 }
 
 data "aws_secretsmanager_secret_version" "secret" {
