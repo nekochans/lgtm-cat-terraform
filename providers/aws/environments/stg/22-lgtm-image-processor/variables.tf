@@ -13,7 +13,11 @@ locals {
 
   eventbridge_rule_name       = "${local.env}-${local.service_name}-rule"
   eventbridge_rule_target_id  = "${local.env}-${local.service_name}-stepfunctions-invoke"
-  eventbridge_iam_role_name   = "${local.env}-eventbridge-${local.service_name}-invoke-stepfunctions--role"
-  eventbridge_iam_policy_name = "${local.env}-eventbridge-${local.service_name}-invoke-stepfunctions--policy"
+  eventbridge_iam_role_name   = "${local.env}-eventbridge-${local.service_name}-invoke-stepfunctions-role"
+  eventbridge_iam_policy_name = "${local.env}-eventbridge-${local.service_name}-invoke-stepfunctions-policy"
   upload_images_bucket        = "${local.env}-lgtmeow-cat-images"
+
+  judge_image_upload_bucket         = "${local.env}-lgtmeow-cat-images"
+  generate_lgtm_image_upload_bucket = "${local.env}-lgtmeow-created-lgtm-images"
+  convert_to_webp_upload_bucket     = "${local.env}-lgtmeow-images"
 }
