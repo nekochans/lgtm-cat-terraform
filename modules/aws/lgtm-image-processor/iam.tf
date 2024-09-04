@@ -10,7 +10,7 @@ data "aws_iam_policy_document" "lambda_assume_role" {
 }
 
 resource "aws_iam_role" "lambda" {
-  name               = var.lambda_iam_role_name
+  name               = "${var.env}-${var.service_name}-lambda-role"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
 }
 
@@ -31,12 +31,12 @@ data "aws_iam_policy_document" "step_functions_assume_role" {
   }
 }
 resource "aws_iam_role" "step_functions" {
-  name               = var.stepfunctions_iam_role_name
+  name               = "${var.env}-stepfunctions-${var.service_name}-lambda-invoke-role"
   assume_role_policy = data.aws_iam_policy_document.step_functions_assume_role.json
 }
 
 resource "aws_iam_policy" "step_functions" {
-  name = var.stepfunctions_iam_policy_name
+  name = "${var.env}-stepfunctions-${var.service_name}-lambda-invoke-policy"
 
   policy = jsonencode({
     "Version" : "2012-10-17",
@@ -55,7 +55,7 @@ resource "aws_iam_policy" "step_functions" {
         "Action" : [
           "lambda:InvokeFunction",
         ],
-        "Resource" : "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${var.lambda_function_name}:*"
+        "Resource" : "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_function_name}:*"
       }
     ]
   })
@@ -81,7 +81,7 @@ data "aws_iam_policy_document" "assume_role" {
 
 # EventBridge
 resource "aws_iam_role" "eventbridge" {
-  name               = var.eventbridge_iam_role_name
+  name               = "${var.env}-eventbridge-${var.service_name}-invoke-stepfunctions-role"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
@@ -94,7 +94,7 @@ data "aws_iam_policy_document" "eventbridge" {
 }
 
 resource "aws_iam_policy" "eventbridge" {
-  name   = var.eventbridge_iam_policy_name
+  name   = "${var.env}-eventbridge-${var.service_name}-invoke-stepfunctions-policy"
   policy = data.aws_iam_policy_document.eventbridge.json
 }
 
