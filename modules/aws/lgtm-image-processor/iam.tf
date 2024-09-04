@@ -19,6 +19,30 @@ resource "aws_iam_role_policy_attachment" "lambda_basic" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
+
+data "aws_iam_policy_document" "lambda_s3" {
+  statement {
+    effect  = "Allow"
+    actions = ["s3:*"]
+    resources = [
+      "arn:aws:s3:::${var.upload_images_bucket}",
+      "arn:aws:s3:::${var.upload_images_bucket}/*",
+      "arn:aws:s3:::${var.judge_image_upload_bucket}",
+      "arn:aws:s3:::${var.judge_image_upload_bucket}/*",
+      "arn:aws:s3:::${var.generate_lgtm_image_upload_bucket}",
+      "arn:aws:s3:::${var.generate_lgtm_image_upload_bucket}/*",
+      "arn:aws:s3:::${var.convert_to_webp_upload_bucket}",
+      "arn:aws:s3:::${var.convert_to_webp_upload_bucket}/*"
+    ]
+  }
+}
+
+resource "aws_iam_role_policy" "lambda_s3" {
+  name   = "${var.env}-${var.service_name}-lambda-s3-policy"
+  role   = aws_iam_role.lambda.id
+  policy = data.aws_iam_policy_document.lambda_s3.json
+}
+
 #StepFunctions
 data "aws_iam_policy_document" "step_functions_assume_role" {
   statement {
