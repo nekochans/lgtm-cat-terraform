@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "lgtm_image_processor" {
-  name                 = var.ecr_name
+  name                 = "${var.env}-${var.service_name}"
   image_tag_mutability = "MUTABLE"
 }
 
