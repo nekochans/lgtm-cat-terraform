@@ -5,8 +5,8 @@ resource "aws_lambda_function" "lgtm_image_processor" {
   role          = aws_iam_role.lambda.arn
 
   architectures = ["arm64"]
-  memory_size   = 128
-  timeout       = 30
+  memory_size   = 256
+  timeout       = 180
 
   environment {
     variables = {
