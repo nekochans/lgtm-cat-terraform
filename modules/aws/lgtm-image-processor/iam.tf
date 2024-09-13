@@ -31,8 +31,6 @@ data "aws_iam_policy_document" "lambda_s3" {
       "arn:aws:s3:::${var.judge_image_upload_bucket}/*",
       "arn:aws:s3:::${var.generate_lgtm_image_upload_bucket}",
       "arn:aws:s3:::${var.generate_lgtm_image_upload_bucket}/*",
-      "arn:aws:s3:::${var.convert_to_webp_upload_bucket}",
-      "arn:aws:s3:::${var.convert_to_webp_upload_bucket}/*"
     ]
   }
 }
