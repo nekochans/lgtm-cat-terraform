@@ -7,5 +7,4 @@ module "lgtm_image_processor" {
   upload_images_bucket              = local.upload_images_bucket
   judge_image_upload_bucket         = local.judge_image_upload_bucket
   generate_lgtm_image_upload_bucket = local.generate_lgtm_image_upload_bucket
-  convert_to_webp_upload_bucket     = local.convert_to_webp_upload_bucket
 }
