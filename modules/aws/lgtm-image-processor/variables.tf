@@ -22,6 +22,10 @@ variable "generate_lgtm_image_upload_bucket" {
   type = string
 }
 
+variable "lambda_function_name" {
+  type = string
+}
+
 data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
@@ -31,8 +35,4 @@ data "aws_secretsmanager_secret" "secret" {
 
 data "aws_secretsmanager_secret_version" "secret" {
   secret_id = data.aws_secretsmanager_secret.secret.id
-}
-
-locals {
-  lambda_function_name = "${var.env}-${var.service_name}"
 }

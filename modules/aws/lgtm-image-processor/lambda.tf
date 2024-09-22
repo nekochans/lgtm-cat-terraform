@@ -1,5 +1,5 @@
 resource "aws_lambda_function" "lgtm_image_processor" {
-  function_name = local.lambda_function_name
+  function_name = var.lambda_function_name
   package_type  = "Image"
   image_uri     = "${aws_ecr_repository.lgtm_image_processor.repository_url}:latest"
   role          = aws_iam_role.lambda.arn

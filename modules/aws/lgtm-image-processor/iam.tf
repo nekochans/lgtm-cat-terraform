@@ -77,7 +77,7 @@ resource "aws_iam_policy" "step_functions" {
         "Action" : [
           "lambda:InvokeFunction",
         ],
-        "Resource" : "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_function_name}:*"
+        "Resource" : "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${var.lambda_function_name}:*"
       }
     ]
   })
