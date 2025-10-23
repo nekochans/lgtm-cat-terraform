@@ -10,7 +10,7 @@ locals {
   name                      = "${local.env}-lgtm-cat-api"
   ecs_domain_name           = "${local.env}-api.${var.main_domain_name}"
   enable_container_insights = false
-  ecs_service_desired_count = 1
+  ecs_service_desired_count = 0
   log_retention_in_days     = 3
 
   sentry_dsn  = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["sentry_dsn"]

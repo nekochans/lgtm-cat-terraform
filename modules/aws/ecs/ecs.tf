@@ -41,8 +41,8 @@ resource "aws_ecs_service" "api" {
 }
 
 resource "aws_ecs_service" "api_v2" {
-  name             = "${var.name}-v2"
-  cluster          = aws_ecs_cluster.api.id
+  name    = "${var.name}-v2"
+  cluster = aws_ecs_cluster.api.id
   // タスクの定義は Terraform ではなく lgtm-cat-api リポジトリで管理
   task_definition  = ""
   desired_count    = var.ecs_service_desired_count
