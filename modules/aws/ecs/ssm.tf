@@ -33,3 +33,9 @@ resource "aws_ssm_parameter" "cognito_user_pool_id" {
   type  = "SecureString"
   value = var.cognito_user_pool_id
 }
+
+resource "aws_ssm_parameter" "cognito_app_client_id" {
+  name  = "/${var.env}/lgtm-cat/api/COGNITO_APP_CLIENT_ID"
+  type  = "SecureString"
+  value = var.cognito_app_client_id
+}
