@@ -39,27 +39,3 @@ resource "aws_ecr_lifecycle_policy" "api_nginx" {
   repository = aws_ecr_repository.api_nginx.name
   policy     = local.lifecycle_policy
 }
-
-
-resource "aws_ecr_repository" "api_v2_app" {
-  name = "${var.name}-v2-app"
-  # CDの構築後にIMMUTABLEに変更する
-  image_tag_mutability = "MUTABLE"
-}
-
-resource "aws_ecr_repository" "api_v2_nginx" {
-  name = "${var.name}-v2-nginx"
-  # CDの構築後にIMMUTABLEに変更する
-  image_tag_mutability = "MUTABLE"
-}
-
-
-resource "aws_ecr_lifecycle_policy" "api_v2_app" {
-  repository = aws_ecr_repository.api_v2_app.name
-  policy     = local.lifecycle_policy
-}
-
-resource "aws_ecr_lifecycle_policy" "api_v2_nginx" {
-  repository = aws_ecr_repository.api_v2_nginx.name
-  policy     = local.lifecycle_policy
-}
