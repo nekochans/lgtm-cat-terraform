@@ -29,8 +29,8 @@ data "aws_iam_policy_document" "ecs_scale" {
     ]
 
     resources = [
-      "arn:aws:ecs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:cluster/${var.env}-lgtm-cat-api",
-      "arn:aws:ecs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:service/${var.env}-lgtm-cat-api/${var.env}-lgtm-cat-api"
+      "arn:aws:ecs:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:cluster/${var.env}-lgtm-cat-api",
+      "arn:aws:ecs:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:service/${var.env}-lgtm-cat-api/${var.env}-lgtm-cat-api"
     ]
   }
 }
