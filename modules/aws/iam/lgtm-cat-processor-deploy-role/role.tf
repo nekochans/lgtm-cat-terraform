@@ -27,7 +27,7 @@ resource "aws_iam_role" "deploy" {
 resource "aws_iam_policy" "deploy" {
   name = "lgtm-cat-processor-deploy-policy"
   policy = templatefile("${path.module}/files/policy.json", {
-    region     = data.aws_region.current.name
+    region     = data.aws_region.current.id
     account_id = data.aws_caller_identity.current.account_id
   })
 }

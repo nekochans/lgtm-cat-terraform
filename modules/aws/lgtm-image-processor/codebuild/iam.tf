@@ -23,7 +23,7 @@ data "aws_iam_policy_document" "codebuild" {
       "logs:PutLogEvents",
     ]
     resources = [
-      "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/*"
+      "arn:aws:logs:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/*"
     ]
   }
 
@@ -33,7 +33,7 @@ data "aws_iam_policy_document" "codebuild" {
       "lambda:UpdateFunctionCode",
       "lambda:GetFunctionConfiguration"
     ]
-    resources = ["arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${var.lambda_function_name}"]
+    resources = ["arn:aws:lambda:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:function:${var.lambda_function_name}"]
   }
 }
 
