@@ -27,7 +27,7 @@ resource "aws_iam_role" "api_deploy" {
 resource "aws_iam_policy" "api_deploy" {
   name = "api-deploy-policy"
   policy = templatefile("${path.module}/files/api-deploy-policy.json", {
-    region     = data.aws_region.current.name
+    region     = data.aws_region.current.id
     account_id = data.aws_caller_identity.current.account_id
   })
 }

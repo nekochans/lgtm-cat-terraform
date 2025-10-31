@@ -70,14 +70,14 @@ resource "aws_iam_policy" "step_functions" {
           "logs:CreateLogGroup",
           "logs:PutLogEvents",
         ],
-        "Resource" : "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/*"
+        "Resource" : "arn:aws:logs:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/*"
       },
       {
         "Effect" : "Allow",
         "Action" : [
           "lambda:InvokeFunction",
         ],
-        "Resource" : "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${var.lambda_function_name}:*"
+        "Resource" : "arn:aws:lambda:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:function:${var.lambda_function_name}:*"
       }
     ]
   })
