@@ -13,3 +13,7 @@
 terraform-boilerplate.iml
 
 modules/aws/lambda/function/lambda.zip
+
+# MCP file
+.mcp.json
+

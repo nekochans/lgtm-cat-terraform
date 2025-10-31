@@ -244,3 +244,28 @@ Provider Plugin Cache 機能を有効化しています。 機能については
 ドキュメントにも記載されていますが、キャッシュされたプラグインは Terraform によって削除されることはありません。
 
 未使用のプラグインは手動で削除してください。
+
+## Claude Code での開発
+
+このプロジェクトは [Claude Code](https://claude.ai/code) を使った開発をサポートしています。
+
+### MCP (Model Context Protocol) サーバーの設定
+
+Claude Code で AWS や Terraform のドキュメントを参照しながら開発を進めるために、MCP サーバーを設定することができます。
+
+`.mcp.json.example` をコピーして `.mcp.json` を作成してください：
+
+```bash
+cp .mcp.json.example .mcp.json
+```
+
+`.mcp.json` は Git 管理されないため、個人の開発環境に合わせて自由にカスタマイズできます。
+
+このファイルには以下の MCP サーバーが設定されています：
+
+- **aws-documentation-mcp-server**: AWS公式ドキュメントの検索・参照
+- **aws-terraform-mcp-server**: Terraform AWS プロバイダーのドキュメント検索・参照
+
+必要に応じて他の MCP サーバーを追加したり、設定を変更したりすることができます。
+
+詳細な開発ガイドラインについては `CLAUDE.md` を参照してください。
