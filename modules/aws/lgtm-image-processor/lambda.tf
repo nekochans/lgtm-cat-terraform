@@ -21,9 +21,7 @@ resource "aws_lambda_function" "lgtm_image_processor" {
 
   lifecycle {
     ignore_changes = [
-      last_modified,
       image_uri,
-      version,
     ]
   }
 }
