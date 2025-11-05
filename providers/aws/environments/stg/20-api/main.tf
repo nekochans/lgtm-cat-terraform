@@ -28,4 +28,5 @@ module "ecs" {
   sentry_dsn                = local.sentry_dsn
   cognito_user_pool_id      = data.terraform_remote_state.cognito.outputs.cognito_user_pool_id
   cognito_app_client_id     = data.terraform_remote_state.cognito.outputs.cognito_app_client_id
+  image_allowed_domain      = local.image_allowed_domain
 }
