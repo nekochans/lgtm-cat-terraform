@@ -52,5 +52,8 @@ variable "cognito_user_pool_id" {
 variable "cognito_app_client_id" {
   type = string
 }
+variable "image_allowed_domain" {
+  type = string
+}
 
 data "aws_region" "current" {}

@@ -39,3 +39,9 @@ resource "aws_ssm_parameter" "cognito_app_client_id" {
   type  = "SecureString"
   value = var.cognito_app_client_id
 }
+
+resource "aws_ssm_parameter" "image_allowed_domain" {
+  name  = "/${var.env}/lgtm-cat/api/IMAGE_ALLOWED_DOMAIN"
+  type  = "SecureString"
+  value = var.image_allowed_domain
+}

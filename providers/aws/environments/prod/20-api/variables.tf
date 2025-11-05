@@ -13,11 +13,12 @@ locals {
   ecs_service_desired_count = 1
   log_retention_in_days     = 3
 
-  sentry_dsn  = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["sentry_dsn"]
-  db_password = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_app_password"]
-  db_username = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_app_user"]
-  db_name     = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_name"]
-  db_hostname = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_host"]
+  sentry_dsn           = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["sentry_dsn"]
+  db_password          = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_app_password"]
+  db_username          = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_app_user"]
+  db_name              = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_name"]
+  db_hostname          = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_host"]
+  image_allowed_domain = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["image_allowed_domain"]
 }
 
 variable "main_domain_name" {
