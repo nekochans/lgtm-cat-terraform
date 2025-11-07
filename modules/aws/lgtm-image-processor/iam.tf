@@ -41,6 +41,20 @@ resource "aws_iam_role_policy" "lambda_s3" {
   policy = data.aws_iam_policy_document.lambda_s3.json
 }
 
+data "aws_iam_policy_document" "lambda_rekognition" {
+  statement {
+    effect    = "Allow"
+    actions   = ["rekognition:DetectLabels"]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_role_policy" "lambda_rekognition" {
+  name   = "${var.env}-${var.service_name}-lambda-rekognition-policy"
+  role   = aws_iam_role.lambda.id
+  policy = data.aws_iam_policy_document.lambda_rekognition.json
+}
+
 #StepFunctions
 data "aws_iam_policy_document" "step_functions_assume_role" {
   statement {
