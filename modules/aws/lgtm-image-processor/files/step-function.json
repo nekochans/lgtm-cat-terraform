@@ -31,6 +31,22 @@
           }
         }
       },
+      "Next": "createImageIndex"
+    },
+    "createImageIndex": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "OutputPath": "$.Payload",
+      "Parameters": {
+        "FunctionName": "${lambda_arn}:$LATEST",
+        "Payload": {
+          "process": "createImageIndex",
+          "image": {
+            "bucketName.$": "$.image.bucketName",
+            "objectKey.$": "$.image.objectKey"
+          }
+        }
+      },
       "End": true
     }
   }
