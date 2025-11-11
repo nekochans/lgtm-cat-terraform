@@ -43,7 +43,8 @@
           "process": "createImageIndex",
           "image": {
             "bucketName.$": "$.image.bucketName",
-            "objectKey.$": "$.image.objectKey"
+            "objectKey.$": "$.image.objectKey",
+            "databaseId.$": "$.image.databaseId"
           }
         }
       },
