@@ -34,15 +34,16 @@ cd scripts/s3-vector
 - 環境に応じて Vector Bucket を作成
   - stg → `stg-lgtm-cat-vectors`
   - prod → `prod-lgtm-cat-vectors`
-- 単一の Vector Index を作成
-  - `multimodal-search-index`（STG / PROD 共通）
+- 環境ごとに Vector Index を作成
+  - stg → `stg-multimodal-search-index`
+  - prod → `prod-multimodal-search-index`
 
 ## 設定内容
 
-| 環境 | Vector Bucket 名         | Index 名                  |
-|------|-------------------------|---------------------------|
-| stg  | stg-lgtm-cat-vectors    | multimodal-search-index   |
-| prod | prod-lgtm-cat-vectors   | multimodal-search-index   |
+| 環境 | Vector Bucket 名         | Index 名                        |
+|------|-------------------------|--------------------------------|
+| stg  | stg-lgtm-cat-vectors    | stg-multimodal-search-index    |
+| prod | prod-lgtm-cat-vectors   | prod-multimodal-search-index   |
 
 - データ型: `float32`
 - 次元数: `1536`
