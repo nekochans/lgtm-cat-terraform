@@ -26,6 +26,22 @@ variable "lambda_function_name" {
   type = string
 }
 
+variable "vector_index_bucket" {
+  type = string
+}
+
+variable "vector_index_name" {
+  type = string
+}
+
+variable "s3vectors_region" {
+  type = string
+}
+
+variable "bedrock_region" {
+  type = string
+}
+
 data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
