@@ -55,6 +55,38 @@ resource "aws_iam_role_policy" "lambda_rekognition" {
   policy = data.aws_iam_policy_document.lambda_rekognition.json
 }
 
+data "aws_iam_policy_document" "lambda_bedrock" {
+  statement {
+    effect  = "Allow"
+    actions = ["bedrock:InvokeModel"]
+    resources = [
+      "arn:aws:bedrock:${var.bedrock_region}::foundation-model/cohere.embed-v4:0"
+    ]
+  }
+}
+
+resource "aws_iam_role_policy" "lambda_bedrock" {
+  name   = "${var.env}-${var.service_name}-lambda-bedrock-policy"
+  role   = aws_iam_role.lambda.id
+  policy = data.aws_iam_policy_document.lambda_bedrock.json
+}
+
+data "aws_iam_policy_document" "lambda_s3vectors" {
+  statement {
+    effect  = "Allow"
+    actions = ["s3vectors:PutVectors"]
+    resources = [
+      "arn:aws:s3vectors:${var.s3vectors_region}:${data.aws_caller_identity.current.account_id}:bucket/${var.vector_index_bucket}/index/${var.vector_index_name}"
+    ]
+  }
+}
+
+resource "aws_iam_role_policy" "lambda_s3vectors" {
+  name   = "${var.env}-${var.service_name}-lambda-s3vectors-policy"
+  role   = aws_iam_role.lambda.id
+  policy = data.aws_iam_policy_document.lambda_s3vectors.json
+}
+
 #StepFunctions
 data "aws_iam_policy_document" "step_functions_assume_role" {
   statement {
