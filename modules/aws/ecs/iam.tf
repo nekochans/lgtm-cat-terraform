@@ -69,3 +69,38 @@ resource "aws_iam_role_policy" "ecs_task" {
   role   = aws_iam_role.ecs_task.id
   policy = data.aws_iam_policy_document.task_role_policy.json
 }
+
+data "aws_iam_policy_document" "bedrock_task_role_policy" {
+  statement {
+    effect  = "Allow"
+    actions = ["bedrock:InvokeModel"]
+    resources = [
+      "arn:aws:bedrock:${var.bedrock_region}::foundation-model/cohere.embed-v4:0"
+    ]
+  }
+}
+
+resource "aws_iam_role_policy" "bedrock_ecs_task" {
+  name   = "${var.name}-bedrock-ecs-task-role-policy"
+  role   = aws_iam_role.ecs_task.id
+  policy = data.aws_iam_policy_document.bedrock_task_role_policy.json
+}
+
+data "aws_iam_policy_document" "s3vectors_task_role_policy" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "s3vectors:GetVectors",
+      "s3vectors:QueryVectors"
+    ]
+    resources = [
+      "arn:aws:s3vectors:${var.s3vectors_region}:${data.aws_caller_identity.current.account_id}:bucket/${var.vector_index_bucket}/index/${var.vector_index_name}"
+    ]
+  }
+}
+
+resource "aws_iam_role_policy" "s3vectors_ecs_task" {
+  name   = "${var.name}-s3vectors-ecs-task-role-policy"
+  role   = aws_iam_role.ecs_task.id
+  policy = data.aws_iam_policy_document.s3vectors_task_role_policy.json
+}

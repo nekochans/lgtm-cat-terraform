@@ -19,6 +19,11 @@ locals {
   db_name              = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_name"]
   db_hostname          = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_host"]
   image_allowed_domain = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["image_allowed_domain"]
+
+  vector_index_bucket = "${local.env}-lgtm-cat-vectors"
+  vector_index_name   = "${local.env}-multimodal-search-index"
+  s3vectors_region    = "us-east-1"
+  bedrock_region      = "us-east-1"
 }
 
 variable "main_domain_name" {
