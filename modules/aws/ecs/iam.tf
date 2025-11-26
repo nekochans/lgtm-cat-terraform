@@ -104,3 +104,21 @@ resource "aws_iam_role_policy" "s3vectors_ecs_task" {
   role   = aws_iam_role.ecs_task.id
   policy = data.aws_iam_policy_document.s3vectors_task_role_policy.json
 }
+
+data "aws_iam_policy_document" "rekognition_task_role_policy" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "rekognition:DetectFaces",
+      "rekognition:DetectLabels",
+      "rekognition:DetectModerationLabels"
+    ]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_role_policy" "rekognition_ecs_task" {
+  name   = "${var.name}-rekognition-ecs-task-role-policy"
+  role   = aws_iam_role.ecs_task.id
+  policy = data.aws_iam_policy_document.rekognition_task_role_policy.json
+}
