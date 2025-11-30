@@ -11,7 +11,7 @@ resource "aws_s3_bucket" "cat_images_bucket" {
 }
 
 resource "aws_s3_bucket_notification" "cat_images_bucket" {
-  bucket      = aws_s3_bucket.cat_images_bucket.id // 最終的にはupload_images_bucketを指定する
+  bucket      = aws_s3_bucket.upload_images_bucket.id
   eventbridge = true
 }
 
