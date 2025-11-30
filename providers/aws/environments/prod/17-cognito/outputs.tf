@@ -17,3 +17,13 @@ output "cognito_app_client_id" {
   value     = module.cognito.cognito_app_client_id
   sensitive = true
 }
+
+output "cognito_client_secret" {
+  value     = module.cognito.cognito_client_secret
+  sensitive = true
+}
+
+output "cognito_token_endpoint" {
+  value     = module.cognito.cognito_token_endpoint
+  sensitive = true
+}

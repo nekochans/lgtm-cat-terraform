@@ -29,3 +29,5 @@ variable "lgtm_cat_image_recognition_api_resource_server_identifier" {
 variable "lgtm_cat_bff_client_name" {
   type = string
 }
+
+data "aws_region" "current" {}
