@@ -3,7 +3,7 @@ locals {
   service_name = "lgtm-image-processor"
 
   log_retention_in_days             = 3
-  upload_images_bucket              = "${local.env}-lgtmeow-cat-images"
+  upload_images_bucket              = "${local.env}-lgtmeow-upload-images"
   judge_image_upload_bucket         = "${local.env}-lgtmeow-cat-images"
   generate_lgtm_image_upload_bucket = "${local.env}-lgtmeow-images"
   vector_index_bucket               = "${local.env}-lgtm-cat-vectors"
