@@ -42,6 +42,23 @@ variable "bedrock_region" {
   type = string
 }
 
+variable "judge_image_api_url" {
+  type = string
+}
+
+variable "cognito_client_id" {
+  type = string
+}
+
+variable "cognito_client_secret" {
+  type      = string
+  sensitive = true
+}
+
+variable "cognito_token_endpoint" {
+  type = string
+}
+
 data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 

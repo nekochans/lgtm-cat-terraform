@@ -12,6 +12,10 @@ module "lgtm_image_processor" {
   s3vectors_region                  = local.s3vectors_region
   bedrock_region                    = local.bedrock_region
   lambda_function_name              = local.lambda_function_name
+  judge_image_api_url               = local.judge_image_api_url
+  cognito_client_id                 = local.cognito_client_id
+  cognito_client_secret             = local.cognito_client_secret
+  cognito_token_endpoint            = local.cognito_token_endpoint
 }
 
 module "codebuild" {
