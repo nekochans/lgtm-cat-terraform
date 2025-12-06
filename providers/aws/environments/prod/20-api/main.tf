@@ -29,8 +29,8 @@ module "ecs" {
   cognito_user_pool_id      = data.terraform_remote_state.cognito.outputs.cognito_user_pool_id
   cognito_app_client_id     = data.terraform_remote_state.cognito.outputs.cognito_app_client_id
   image_allowed_domain      = local.image_allowed_domain
-  vector_index_name         = local.vector_index_name
-  vector_index_bucket       = local.vector_index_bucket
+  vector_index_name         = data.terraform_remote_state.s3_vectors.outputs.vector_index_name
+  vector_index_bucket       = data.terraform_remote_state.s3_vectors.outputs.vector_bucket_name
   s3vectors_region          = local.s3vectors_region
   bedrock_region            = local.bedrock_region
 }
