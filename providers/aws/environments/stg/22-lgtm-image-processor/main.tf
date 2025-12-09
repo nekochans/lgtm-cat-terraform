@@ -7,8 +7,8 @@ module "lgtm_image_processor" {
   upload_images_bucket              = local.upload_images_bucket
   judge_image_upload_bucket         = local.judge_image_upload_bucket
   generate_lgtm_image_upload_bucket = local.generate_lgtm_image_upload_bucket
-  vector_index_bucket               = local.vector_index_bucket
-  vector_index_name                 = local.vector_index_name
+  vector_index_bucket               = data.terraform_remote_state.s3_vectors.outputs.vector_bucket_name
+  vector_index_name                 = data.terraform_remote_state.s3_vectors.outputs.vector_index_name
   s3vectors_region                  = local.s3vectors_region
   bedrock_region                    = local.bedrock_region
   lambda_function_name              = local.lambda_function_name
