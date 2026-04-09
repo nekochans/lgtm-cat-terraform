@@ -19,6 +19,7 @@ locals {
   db_name              = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_name"]
   db_hostname          = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["db_host"]
   image_allowed_domain = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["image_allowed_domain"]
+  mcp_allowed_host     = local.ecs_domain_name
 
   s3vectors_region = "ap-northeast-1"
   bedrock_region   = "ap-northeast-1"
