@@ -45,3 +45,9 @@ resource "aws_ssm_parameter" "image_allowed_domain" {
   type  = "SecureString"
   value = var.image_allowed_domain
 }
+
+resource "aws_ssm_parameter" "mcp_allowed_host" {
+  name  = "/${var.env}/lgtm-cat/api/MCP_ALLOWED_HOST"
+  type  = "SecureString"
+  value = var.mcp_allowed_host
+}

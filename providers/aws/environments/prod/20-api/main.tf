@@ -29,6 +29,7 @@ module "ecs" {
   cognito_user_pool_id      = data.terraform_remote_state.cognito.outputs.cognito_user_pool_id
   cognito_app_client_id     = data.terraform_remote_state.cognito.outputs.cognito_app_client_id
   image_allowed_domain      = local.image_allowed_domain
+  mcp_allowed_host          = local.mcp_allowed_host
   vector_index_name         = data.terraform_remote_state.s3_vectors.outputs.vector_index_name
   vector_index_bucket       = data.terraform_remote_state.s3_vectors.outputs.vector_bucket_name
   s3vectors_region          = local.s3vectors_region

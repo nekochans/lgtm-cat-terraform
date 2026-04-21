@@ -55,6 +55,9 @@ variable "cognito_app_client_id" {
 variable "image_allowed_domain" {
   type = string
 }
+variable "mcp_allowed_host" {
+  type = string
+}
 variable "bedrock_region" {
   type = string
 }
